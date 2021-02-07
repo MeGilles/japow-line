@@ -27,7 +27,7 @@ export default function Menu(props: any) {
       onMouseLeave={toggleMenu}
       style={{width: props.size}}
     >
-      <MyButton name={props.name} toggle={open}/>
+      <MyButton name={props.name} menuButton={true}/>
       <div
         className={styles.menu_content_container}
         style={{ opacity: open ? 1 : 0 }}

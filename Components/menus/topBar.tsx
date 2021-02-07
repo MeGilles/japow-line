@@ -26,8 +26,8 @@ var buttonsNbr:number = FakeMenu.menus.length;
 var buttonsPartSizePercent:number = 100;
 var buttonSizePercent:number = buttonsNbr < 5 ? 15 : buttonsPartSizePercent / buttonsNbr;
 var buttonSize:string = buttonSizePercent+'%';
-const leftGlueSize = '30%';
-const rightGlueSize = '15%';
+const leftGlueSize = '20%';
+const rightGlueSize = '10%';
 
 export default function TopBar() {
 

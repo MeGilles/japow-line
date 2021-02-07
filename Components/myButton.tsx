@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import styles from "./myButton.module.scss";
 
@@ -26,6 +27,12 @@ export default function MyButton(props: any) {
       style={{...size, ...textAlign}}
     >
       {props.name}
+      { 
+        props.menuButton &&
+        <div>
+          <ExpandMoreIcon fontSize="small"/>
+        </div>
+      }
       {props.children}
     </button>
   );

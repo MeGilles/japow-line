@@ -8,7 +8,7 @@ const FakeMenu = {
                     "HAKUBA",
                     "MYUOKO",
                     "ICI",
-                    " TRES TRES TRES TRESTRES TRES TRES TRESTRES TRES TRES TRESTRES TRES TRES TRES LOIN"
+                    "TRES LOIN"
                 ]
         },
         {
@@ -30,27 +30,6 @@ const FakeMenu = {
             id: "ABOUT US",
             subsections: []
 
-        },
-        {
-            id: "ABOUT US1",
-            subsections: []
-
-        },
-        {
-            id: "ABOUT US2",
-            subsections: []
-
-        },
-        {
-            id: "ROUTES1",
-            subsections:
-                [
-                    "NISEKO",
-                    "HAKUBA",
-                    "MYUOKO",
-                    "ICI",
-                    " TRES S TRESTRES TRES TRES TRES LOIN"
-                ]
         },
     ]
 }
