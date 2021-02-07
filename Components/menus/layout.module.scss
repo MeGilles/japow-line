@@ -1,0 +1,12 @@
+.container {
+  width: 100vw;
+  height: 4rem;
+
+  background-color: white;
+  box-shadow: 0 2px 4px -1px gray;
+  transition: 0.1s;
+
+  &:hover {
+    box-shadow: 0 2px 4px -1px gray;
+  }
+}

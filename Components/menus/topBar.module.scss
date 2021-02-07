@@ -1,0 +1,17 @@
+.menu_container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    img {
+        max-height: 80%;
+        margin: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
