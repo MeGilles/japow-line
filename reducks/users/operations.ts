@@ -26,7 +26,7 @@ export const listenAuthState = () => {
     }
 }
 
-export const resetPassword = (email) => {
+export const resetPassword = (email: string) => {
     return async (dispatch) => {
         /*
         if (email === "") {
@@ -45,7 +45,7 @@ export const resetPassword = (email) => {
     }
 }
 
-export const signIn = (email, password) => {
+export const signIn = (email: string, password: string) => {
     return async (dispatch) => {
         /*
         //Validation 
@@ -80,7 +80,7 @@ export const signIn = (email, password) => {
     }
 }
 
-export const signUp = (username, email, password, confirmPassword) => {
+export const signUp = (username: string, email: string, password: string, confirmPassword: string) => {
     return async (dispatch) => {
         /*
         //Validation
