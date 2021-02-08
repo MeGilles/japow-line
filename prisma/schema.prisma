@@ -10,11 +10,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Mountain{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
-}
-
 model RouteType{
   id      Int     @default(autoincrement()) @id
   name    String  @unique
@@ -38,6 +33,12 @@ model BarChart {
     id      Int   @default(autoincrement()) @id
 }
 
+model Mountain{
+  id      Int     @default(autoincrement()) @id
+  name    String  @unique
+}
+
+
 model Route {
   id                  Int            @default(autoincrement()) @id
   mountain            Mountain       @relation(fields: [mountainId], references: [id])
@@ -46,23 +47,24 @@ model Route {
   routeType           RouteType      @relation(fields: [routeTypeId], references: [id])
   routeTypeId         Int
 
-  altitudeZone        AltitudeZone   @relation(fields: [altitudeZoneId], references: [id])
-  altitudeZoneId      Int
+  altitudeZone        AltitudeZone?   @relation(fields: [altitudeZoneId], references: [id])
+  altitudeZoneId      Int?
 
-  startPointType      PointType      @relation(fields: [startPointTypeId], references: [id])
-  startPointTypeId    Int
+  startPointType      PointType?      @relation(fields: [startPointTypeId], references: [id])
+  startPointTypeId    Int?
 
-  //endPointType        PointType      
+  //endPointType        PointType       @relation(fields: [endPointTypeId], references: [id])
   //endPointTypeId      Int 
 
-  map                 Map_           @relation(fields: [mapId], references: [id])
-  mapId               Int            @unique
+  map                 Map_?           @relation(fields: [mapId], references: [id])
+  mapId               Int?            @unique
 
-  barChart            BarChart       @relation(fields: [barChartId], references: [id])
-  barChartId          Int            @unique
+  barChart            BarChart?       @relation(fields: [barChartId], references: [id])
+  barChartId          Int?            @unique
 
-  routePoints         String
-  
+  routePoints         String?
+
+  routeName           String          @unique
   routeDescription    String
   elevationDifference Int
   maxAltitude         Int
