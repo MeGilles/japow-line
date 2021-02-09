@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./devdb.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model RouteType{
+  id      Int     @default(autoincrement()) @id
+  name    String  @unique
+}
+
+model AltitudeZone{
+  id      Int     @default(autoincrement()) @id
+  name    String  @unique
+}
+
+model PointType{
+  id      Int     @default(autoincrement()) @id
+  name    String  @unique
+}
+
+model Map_ {
+    id      Int   @default(autoincrement()) @id
+}
+
+model BarChart {
+    id      Int   @default(autoincrement()) @id
+}
+
+model Mountain{
+  id      Int     @default(autoincrement()) @id
+  name    String  @unique
+}
+
+
+model Route {
+  id                  Int            @default(autoincrement()) @id
+  mountain            Mountain       @relation(fields: [mountainId], references: [id])
+  mountainId          Int
+
+  routeType           RouteType      @relation(fields: [routeTypeId], references: [id])
+  routeTypeId         Int
+
+  altitudeZone        AltitudeZone?   @relation(fields: [altitudeZoneId], references: [id])
+  altitudeZoneId      Int?
+
+  startPointType      PointType?      @relation(fields: [startPointTypeId], references: [id])
+  startPointTypeId    Int?
+
+  //endPointType        PointType       @relation(fields: [endPointTypeId], references: [id])
+  //endPointTypeId      Int 
+
+  map                 Map_?           @relation(fields: [mapId], references: [id])
+  mapId               Int?            @unique
+
+  barChart            BarChart?       @relation(fields: [barChartId], references: [id])
+  barChartId          Int?            @unique
+
+  routePoints         String?
+
+  routeName           String          @unique
+  routeDescription    String
+  elevationDifference Int
+  maxAltitude         Int
+  minAltitude         Int
+  totalDistance       Int
+  elevationDistance   Int
+  decentDistance      Int
+}
+
+model Post {
+  id              Int      @default(autoincrement()) @id
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  // ?? title     String
+  content         String
+  // ?? published Boolean  @default(false)
+  author          User     @relation(fields: [authorId], references: [id])
+  authorId        Int
+}
+
+model User {
+  id      Int      @default(autoincrement()) @id
+  email   String   @unique
+  name    String?
+  posts   Post[]
+  // profile Profile?
+}
+
+// model Profile {
+//   id     Int     @default(autoincrement()) @id
+//   bio    String?
+//   user   User    @relation(fields: [userId], references: [id])
+//   userId Int     @unique
+// }

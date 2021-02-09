@@ -1,5 +1,8 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import * as db from '../database'
+
 
 export default function Home() {
   return (
@@ -62,4 +65,13 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  await db.utils.dropAll();
+  await db.utils.PopulateDb();
+  await db.utils.printDbContents();
+  return {
+    props: {}, // will be passed to the page component as props
+  }
 }
