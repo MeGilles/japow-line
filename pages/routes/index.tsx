@@ -28,7 +28,7 @@ export default function Route({ routes }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const routes = await db.getRoutesBasicInfo();
+    const routes = await db.route.getRoutesBasicInfo();
 
     return {
         props: {

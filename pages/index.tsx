@@ -68,9 +68,9 @@ export default function Home() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  await db.dropAll();
-  await db.PopulateDb();
-  await db.printDbContents();
+  await db.utils.dropAll();
+  await db.utils.PopulateDb();
+  await db.utils.printDbContents();
   return {
     props: {}, // will be passed to the page component as props
   }

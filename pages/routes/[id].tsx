@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     try {
         //const locale = context.locale; //not used for the moment
         const id = parseInt(context.params.id.toString());
-        const routeData = await db.getRoute(id);
+        const routeData = await db.route.getRoute(id);
         return {
             props: {
                 routeData
@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const info = await db.getRoutesBasicInfo();
+    const info = await db.route.getRoutesBasicInfo();
 
     let parameters = [];
     info.forEach(element => {
