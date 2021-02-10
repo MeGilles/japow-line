@@ -2,6 +2,7 @@
 
 # Prisma
 /prisma/migrations
+/prisma/devdb.db
 
 # dependencies
 /node_modules

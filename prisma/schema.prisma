@@ -13,20 +13,20 @@ generator client {
 model RouteType{
   id      Int     @default(autoincrement()) @id
   name    String  @unique
-  name_jp String  @unique
+  name_jp String?  @unique
 }
 
 model AltitudeZone{
   id      Int     @default(autoincrement()) @id
   name    String  @unique
-  name_jp String  @unique
+  name_jp String?  @unique
 
 }
 
 model PointType{
   id      Int     @default(autoincrement()) @id
   name    String  @unique
-  name_jp String  @unique
+  name_jp String?  @unique
 
 }
 
@@ -41,7 +41,7 @@ model BarChart {
 model Mountain{
   id      Int     @default(autoincrement()) @id
   name    String  @unique
-  name_jp String  @unique
+  name_jp String?  @unique
 }
 
 // model Location{
