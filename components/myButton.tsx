@@ -32,11 +32,11 @@ export default function MyButton(props: Props) {
     textAlign: textAlign,
   };
 
-  let setBackgroundColor = {
-    backgroundColor: isMenuButton
+  let setBackground = {
+    backgroundPosition: isMenuButton
       ? isMenuOpened
-        ? "rgb(233, 232, 232)"
-        : "white"
+        ? "left"
+        : "right"
       : "none",
   };
 
@@ -44,7 +44,7 @@ export default function MyButton(props: Props) {
     <button
       className={styles.myButton}
       onClick={click}
-      style={{ ...setSize, ...setTextAlign, ...setBackgroundColor }}
+      style={{ ...setSize, ...setTextAlign, ...setBackground }}
     >
       {name}
       {isMenuButton && (

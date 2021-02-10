@@ -9,7 +9,7 @@ import * as FakeMenu from '../../FakeContent/FakeMenu';
 type Props = {
   name: string;
   redirection: string;
-  subsections: FakeMenu.fakeSimpleMenu[];
+  subsections: FakeMenu.fakeMenu[];
   size?: any;
 }
 
@@ -30,7 +30,7 @@ export default function Menu(props: Props) {
 
   const trail = useTrail(subsections.length, {
     reset: open ? false : true,
-    config: { duration: 250 },
+    config: { duration: 300 },
     visibility: open ? "visible" : "hidden",
     opacity: open ? 1 : 0,
     maxHeight: open ? "100vh" : "0vh",
