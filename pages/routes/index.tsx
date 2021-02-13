@@ -1,30 +1,29 @@
-import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
+import React from "react";
+import { Layout } from "../../components"
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import * as db from '../../database'
 
-export default function Route({ routes }) {
 
+export default function Itineraries({ routes }) {
     routes.forEach(element => {
-        element.id = "/routes/"+element.id
+        element.id = "/routes/" + element.id
     });
 
     let list = [];
     routes.forEach(element => {
-        list.push( <li><a href={ element.id }>{element.routeName}</a></li>);
+        list.push(<li><a href={element.id}>{element.routeName}</a></li>);
     })
 
     return (
-        <div className={styles.container}>
-            <Head>
-                <title>All routes</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <ul>
-                {list}
-            </ul>
-        </div>
-    )
+        <Layout>
+            <div className="default_centered_div">
+                This is a page dedicated to Routes !
+                <ul>
+                    {list}
+                </ul>
+            </div>
+        </Layout>
+    );
 }
 
 export const getStaticProps: GetStaticProps = async () => {

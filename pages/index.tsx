@@ -99,8 +99,8 @@ const createThirdContent = () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   await db.utils.dropAll();
-  await db.utils.PopulateDb();
-  await db.utils.printDbContents();
+  db.utils.PopulateDb();
+  //await db.utils.printDbContents();
   return {
     props: {}, // will be passed to the page component as props
   }

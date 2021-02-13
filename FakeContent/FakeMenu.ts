@@ -1,39 +1,39 @@
 export const FakeMenu = [
   {
-    name: "ITINERARIES",
-    redirection: "/itineraries",
+    name: "ROUTES",
+    redirection: "/routes",
     subsections: [
       {
-        name: "Itinerary 1",
-        redirection: "/itineraries/1",
+        name: "Route 1",
+        redirection: "/routes/1",
       },
       {
-        name: "Itinerary 2",
-        redirection: "/itineraries/2",
+        name: "Route 2",
+        redirection: "/routes/2",
       },
       {
-        name: "Itinerary 3",
-        redirection: "/itineraries/3",
+        name: "Route 3",
+        redirection: "/routes/3",
       },
       {
-        name: "Itinerary 4",
-        redirection: "/itineraries/4",
+        name: "Route 4",
+        redirection: "/routes/4",
       },
       {
-        name: "Itinerary 5",
-        redirection: "/itineraries/5",
+        name: "Route 5",
+        redirection: "/routes/5",
       },
       {
-        name: "Itinerary 6",
-        redirection: "/itineraries/6",
+        name: "Route 6",
+        redirection: "/routes/6",
       },
       {
-        name: "Itinerary 7",
-        redirection: "/itineraries/7",
+        name: "Route 7",
+        redirection: "/routes/7",
       },
       {
-        name: "Itinerary test",
-        redirection: "/itineraries/test",
+        name: "Route test",
+        redirection: "/routes/test",
       },
     ],
   },
