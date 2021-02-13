@@ -42,6 +42,28 @@ export default function Route({ routeData }) {
     )
 }
 
+Route.defaultProps = {
+    routeData: {
+        id: 5,
+        mountainId: 2,
+        routeTypeId: 4,
+        altitudeZoneId: 4,
+        startPointTypeId: 2,
+        mapId: null,
+        barChartId: null,
+        routeName: 'Tour au mont Ventoux',
+        routeName_jp: null,
+        routeDescription: 'This is a description for a round trip at mt ventoux',
+        routeDescription_jp: null,
+        elevationDifference: 4,
+        maxAltitude: 4,
+        minAltitude: 4,
+        totalDistance: 4,
+        elevationDistance: 4,
+        decentDistance: 8
+    }
+}
+
 export const getStaticProps: GetStaticProps = async (context) => {
     try {
         //const locale = context.locale; //not used for the moment
@@ -57,17 +79,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
         return { notFound: true };
     }
 }
-  
+
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const info = await db.route.getRoutesBasicInfo();
 
     let parameters = [];
     info.forEach(element => {
-        parameters.push({ params: { id: element.id.toString()} });
+        parameters.push({ params: { id: element.id.toString() } });
     });
 
-    return { 
+    return {
         paths: parameters,
         fallback: true,
     };
