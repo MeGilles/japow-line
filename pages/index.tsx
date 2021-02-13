@@ -1,109 +1,90 @@
 import { Layout } from '../components'
-import Link from 'next/link'
 import { useRouter } from 'next/router';
 
-import { Parallax, Background } from 'react-parallax';
+import React, { MutableRefObject, useRef } from 'react';
+
+import { simpleScrollingParallaxScreen, doubleSlidingParallaxScreen } from '../components/parallax/parallax';
 
 export default function Home() {
-
-  const router = useRouter();
+  const element1 = useRef(null);
+  const element2 = useRef(null);
+  const element3 = useRef(null);
 
   return (
     <Layout>
       <div className="main_page_wrapper">
-        <Parallax
-          bgImage={'/images/ski_main_page_mountains_1.jpg'}
-          bgImageAlt="ski_bg"
-          strength={300}
-        >
-          <div className="text_over_bg">
-            <div className="wrapper">
-              <h1>Welcome to JapowLine !</h1>
-              <button className="btn_to_search" onClick={() => router.push('/itineraries/')}>Find routes !</button>
-              <div className="text_container">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend id risus at euismod. Vestibulum at vestibulum ex. Integer pellentesque iaculis malesuada. Maecenas vulputate sed quam in lobortis. Curabitur blandit, purus vel posuere luctus, urna ante eleifend nisi, sit amet egestas sapien nunc lobortis augue. Pellentesque in turpis ac massa condimentum gravida pretium ac erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis maximus dapibus neque id facilisis. Proin id commodo purus.
-            </div>
-            </div>
-          </div>
-        </Parallax>
 
-        <div className="second_container">
-          <Parallax
-            renderLayer={percentage => (
-              <div
-                style={{
-                  position: 'absolute',
-                  backgroundImage: 'url("/images/ski_main_page_slide.jpg")',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: '100%',
-                  opacity: percentage,
-                  right: (0 - percentage * 20) + "%",
-                  top: '0',
-                  width: '140%',
-                  height: '100%',
-                  boxShadow: '10px 10px 20px black',
-                  visibility: percentage > 2 ? 'hidden' : 'visible'
-                }}
-              />
-            )}
-          >
-            <div style={{ height: "100vh" }}>
-
-              <Parallax
-                renderLayer={percentage => (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      opacity: percentage,
-                      left: (100 - percentage * 55) + "%",
-                      top: '10%',
-                      width: '40%',
-                      height: '80%',
-                      visibility: percentage > 2 ? 'hidden' : 'visible'
-                    }}
-                  >
-                    <div className="wrapper_fullwidth">
-                      <h1>More text !!!!!!!!</h1>
-                      <div className="text_container">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend id risus at euismod. Vestibulum at vestibulum ex. Integer pellentesque iaculis malesuada. Maecenas vulputate sed quam in lobortis. Curabitur blandit, purus vel posuere luctus, urna ante eleifend nisi, sit amet egestas sapien nunc lobortis augue. Pellentesque in turpis ac massa condimentum gravida pretium ac erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis maximus dapibus neque id facilisis. Proin id commodo purus.
-                      </div>
-                    </div>
-                  </div>
-                )}
-              >
-               <div style={{ height: "100vh" }} />
-              </Parallax>
-            </div>
-
-          </Parallax>
+        <div ref={element1}>
+          {
+            simpleScrollingParallaxScreen('/images/top_page_bg.jpg', 100, createFirstContent(), scrollTo, element2)
+          }
         </div>
 
-        <Parallax
-          bgImage={'/images/ski_main_page_mountains_2.jpg'}
-          bgImageAlt="ski_bg"
-          bgImageStyle={{ width: "100%" }}
-          strength={300}
-        >
-          <div className="text_over_bg">
-            <div className="wrapper">
-              <h1>この壁紙はカッコいだろ！！</h1>
-              <div className="text_container">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend id risus at euismod. Vestibulum at vestibulum ex. Integer pellentesque iaculis malesuada. Maecenas vulputate sed quam in lobortis. Curabitur blandit, purus vel posuere luctus, urna ante eleifend nisi, sit amet egestas sapien nunc lobortis augue. Pellentesque in turpis ac massa condimentum gravida pretium ac erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis maximus dapibus neque id facilisis. Proin id commodo purus.
-            </div>
-            </div>
-          </div>
-        </Parallax>
+        <div ref={element2}>
+          {
+            doubleSlidingParallaxScreen('/images/ski_main_page_slide.jpg', createSecondContent(), scrollTo, element3)
+          }
+        </div>
 
-        <div className="second_container">
-          <div className="wrapper">
-            <h1>IN PROGRESS</h1>
-            <div className="text_container">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend id risus at euismod. Vestibulum at vestibulum ex. Integer pellentesque iaculis malesuada. Maecenas vulputate sed quam in lobortis. Curabitur blandit, purus vel posuere luctus, urna ante eleifend nisi, sit amet egestas sapien nunc lobortis augue. Pellentesque in turpis ac massa condimentum gravida pretium ac erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis maximus dapibus neque id facilisis. Proin id commodo purus.
-            </div>
-          </div>
+        <div ref={element3}>
+          {
+            simpleScrollingParallaxScreen('/images/ski_main_page_mountains_2.jpg', 300, createThirdContent(), scrollTo, element1)
+          }
         </div>
 
       </div>
     </Layout >
+  );
+}
+
+const scrollTo = (element: MutableRefObject<any>) => {
+  element.current.scrollIntoView()  
+}
+
+const createFirstContent = () => {
+
+  return (
+    <div className="top_page_first_screen">
+      <div className="top_text">
+        <div className="title">
+          Japow Line
+        </div>
+        <div className="subtitle">
+          Backcountry skiing in Japan
+        </div>
+      </div>
+      <div className="logo_container">
+        <img src="/images/logo.png" alt="logo" />
+      </div>
+    </div>
+  );
+}
+
+const createSecondContent = () => {
+
+  return (
+    <>
+      <div>
+      Konchichiwa!! “Arigatou” for visiting our site.
+      “Japow line” shows the informations of Backcountry-skiing, Ski-touring, Freeriding and off-piste.
+      We would like to help you find the correct information about Backcountry skiing in Japan, like routes, regional rules, weather and avalanche information.
+      Have a Nice Japow!!
+      <br/>
+      The information presented on Japow line is subject to uncertainties.
+      Therefore Japow line must not be the only criterion to access a slope.
+      Japow line does not guarantee the correctness of the information.
+      Any liability for accidents and damages in connection with the use of Japow is excluded.
+      The planning and execution of your winter sports activities is at your own risk and under your sole responsibility.
+      </div>
+    </>
+  );
+}
+
+const createThirdContent = () => {
+
+  return (
+    <>
+      
+    </>
   );
 }

@@ -1,7 +1,9 @@
 import React from "react";
 import { useRouter } from 'next/router'
 import Avatar from "@material-ui/core/Avatar";
-import { signIn, useSession } from 'next-auth/client'
+import { signIn, useSession } from 'next-auth/client';
+
+import frontData from "../../public/configs/frontData";
 
 import styles from "./topBar.module.scss";
 import * as FakeMenu from "../../FakeContent/FakeMenu";
@@ -9,13 +11,12 @@ import Menu from "./menu";
 import MyButton from "../myButton";
 import ElasticGlue from "../utils/elasticGlue";
 
-const logoSrc = "/images/logo.png";
-const profileSrc = "/images/profile.jpeg";
-
 var buttonsNbr: number = FakeMenu.FakeMenu.length;
-var buttonsPartSizePercent: number = 100;
+var buttonsPartSizePercent: number = frontData.menuButtonsTotalMaxWidth.value;
+
 var buttonSizePercent: number = buttonsNbr < 5 ? 15 : buttonsPartSizePercent / buttonsNbr;
-var buttonSize: string = buttonSizePercent + '%';
+var buttonSize: string = buttonSizePercent + frontData.menuButtonsTotalMaxWidth.unit;
+
 const leftGlueSize = '20%';
 const rightGlueSize = '15%';
 
@@ -27,7 +28,7 @@ export default function TopBar() {
 
   return (
     <div className={styles.menu_container}>
-      <img src={logoSrc} alt="logo" onClick={() => router.push("/")} />
+      <img src={frontData.images.logo} alt="logo" onClick={() => router.push("/")} />
 
       <ElasticGlue width={leftGlueSize} />
 
