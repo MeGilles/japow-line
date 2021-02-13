@@ -1,0 +1,98 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.default_centered_div {
+  display: inline-block;
+
+  width: 100%;
+  height: 100vh;
+
+  font-size: 4rem;
+  text-align: center;
+  margin-top: 20rem;
+}
+
+.top_page_first_screen {
+  .top_text {
+    position: absolute;
+
+    top: 2rem;
+    left: 2rem;
+
+    .title {
+      font-size: 8rem;
+    }
+
+    .subtitle {
+      font-size: 4rem;
+      font-style: oblique;
+      text-indent: 4rem;
+    }
+  }
+
+  .logo_container {
+    position: absolute;
+
+    bottom: 4rem;
+    right: 4em;
+
+    img {
+      width: 25rem;
+    }
+  }
+}
+
+.top_page_second_screen {
+
+  text-align: center;
+
+  .welcoming_message {
+    position: absolute;
+
+    top: 40%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 1.3rem;
+
+    background-color: white;
+
+    padding: 2rem;
+    border-radius: 5px;
+
+    box-shadow: 2px 2px 4px rgb(63, 63, 63);
+  }
+
+  .warning_message {
+    position: absolute;
+
+    bottom: 5%;
+    right: 5%;
+
+    font-style: oblique;
+    color: rgb(139, 29, 29);
+
+    background-color: white;
+
+    padding: 1rem;
+    border-radius: 5px;
+
+    box-shadow: 2px 2px 4px rgb(63, 63, 63);
+  }
+}
