@@ -2,27 +2,37 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./devdb.db"
+  provider = "postgres"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
+// for instance : Go&Return, Round-trip, Traverse, Several days
 model RouteType{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
+  id      Int      @default(autoincrement()) @id
+  name    String   @unique
+  name_jp String?  @unique
 }
 
+// for instance: Ex,Alpine, Forest-limit, Below Forest-limit , Area not covered by snow
 model AltitudeZone{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
+  id      Int      @default(autoincrement()) @id
+  name    String   @unique
+  name_jp String?  @unique
+
 }
 
+// used for start and end points
+// for instance : Ex, Big Parking / Parking limited / Top of ski-area
 model PointType{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
+  id      Int      @default(autoincrement()) @id
+  name    String   @unique
+  name_jp String?  @unique
+
+  start   PointType[] @relation("start")
 }
 
 model Map_ {
@@ -34,68 +44,133 @@ model BarChart {
 }
 
 model Mountain{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
+  id      Int      @default(autoincrement()) @id
+  name    String   @unique
+  name_jp String?  @unique
 }
 
+// hierarchical places for instance : Alps > Mont Blanc massif > Dent du Géant
+model Location{
+   id       Int        @default(autoincrement()) @id
+
+   parent   Location?  @relation(fields: [parentId], references: [id])
+   parentId Int?     
+   
+   name     String     @unique
+   name_jp  String     @unique
+}
 
 model Route {
   id                  Int            @default(autoincrement()) @id
-  mountain            Mountain       @relation(fields: [mountainId], references: [id])
-  mountainId          Int
 
-  routeType           RouteType      @relation(fields: [routeTypeId], references: [id])
-  routeTypeId         Int
+  name                String          @unique
+  name_jp             String          @unique
 
-  altitudeZone        AltitudeZone?   @relation(fields: [altitudeZoneId], references: [id])
+  description         String?
+  description_jp      String?
+
+  elevationDifference Int?
+  maxAltitude         Int?
+  minAltitude         Int?
+  totalDistance       Int?
+  elevationDistance   Int?
+  decentDistance      Int?
+
+  recomendedMonth     Int[] //numbers between 1 and 12
+  picturesPath        String[]  //the paths to pictures  
+  routePoints         String[]  //list of location points as string //for instance  [Chambéry, St Pierre d'Albigny, Col du Frêne, Chambéry]
+
+  mountain            Mountain?      @relation(fields: [mountainId], references: [id])
+  mountainId          Int?
+
+  routeType           RouteType?     @relation(fields: [routeTypeId], references: [id])
+  routeTypeId         Int?
+
+  altitudeZone        AltitudeZone?  @relation(fields: [altitudeZoneId], references: [id])
   altitudeZoneId      Int?
 
-  startPointType      PointType?      @relation(fields: [startPointTypeId], references: [id])
+  startPointType      PointType?     @relation(fields: [startPointTypeId], references: [id])
   startPointTypeId    Int?
 
-  //endPointType        PointType       @relation(fields: [endPointTypeId], references: [id])
-  //endPointTypeId      Int 
+  endPointType        PointType?     @relation("start", fields: [endPointTypeId], references: [id])
+  endPointTypeId      Int? 
 
-  map                 Map_?           @relation(fields: [mapId], references: [id])
-  mapId               Int?            @unique
+  map                 Map_?          @relation(fields: [mapId], references: [id])
+  mapId               Int?            
 
-  barChart            BarChart?       @relation(fields: [barChartId], references: [id])
-  barChartId          Int?            @unique
-
-  routePoints         String?
-
-  routeName           String          @unique
-  routeDescription    String
-  elevationDifference Int
-  maxAltitude         Int
-  minAltitude         Int
-  totalDistance       Int
-  elevationDistance   Int
-  decentDistance      Int
+  barChart            BarChart?      @relation(fields: [barChartId], references: [id])
+  barChartId          Int?            
 }
 
+//a post on a route page
 model Post {
   id              Int      @default(autoincrement()) @id
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  // ?? title     String
+  title           String?
   content         String
-  // ?? published Boolean  @default(false)
-  author          User     @relation(fields: [authorId], references: [id])
+  picturesPath    String[]
+
+  route           Route    @relation(fields: [routeId], references: [id])
+  routeId         Int
+
+  author          Account  @relation(fields: [authorId], references: [id])
   authorId        Int
 }
 
-model User {
-  id      Int      @default(autoincrement()) @id
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  // profile Profile?
+//models bellow are used by next-auth
+
+model Account {
+  id                 Int       @default(autoincrement()) @id
+  compoundId         String    @unique @map(name: "compound_id")
+  userId             Int       @map(name: "user_id")
+  providerType       String    @map(name: "provider_type")
+  providerId         String    @map(name: "provider_id")
+  providerAccountId  String    @map(name: "provider_account_id")
+  refreshToken       String?   @map(name: "refresh_token")
+  accessToken        String?   @map(name: "access_token")
+  accessTokenExpires DateTime? @map(name: "access_token_expires")
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+
+  @@map(name: "accounts")
 }
 
-// model Profile {
-//   id     Int     @default(autoincrement()) @id
-//   bio    String?
-//   user   User    @relation(fields: [userId], references: [id])
-//   userId Int     @unique
-// }
+model Session {
+  id           Int      @default(autoincrement()) @id
+  userId       Int      @map(name: "user_id")
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
+}
+
+model User {
+  id            Int       @default(autoincrement()) @id
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map(name: "email_verified")
+  image         String?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+
+  @@map(name: "users")
+}
+
+model VerificationRequest {
+  id         Int      @default(autoincrement()) @id
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime  @default(now()) @map(name: "created_at")
+  updatedAt  DateTime  @default(now()) @map(name: "updated_at")
+
+  @@map(name: "verification_requests")
+}
