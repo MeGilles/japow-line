@@ -9,7 +9,9 @@ export const siteTitle = "Next.js Sample Website";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 
-  const [stickToTop, setStickToTop] = useState(true),
+  const [prevScroll, setPrevScroll] = useState(0),
+    [scrollingDown, setScrollingDown] = useState(false),
+    [stickToTop, setStickToTop] = useState(true),
     [hovered, setHovered] = useState(false);
 
   const hover = () => {
@@ -25,6 +27,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       setStickToTop(true);
     } else {
       setStickToTop(false);
+      if (prevScroll < window.scrollY) {
+        setScrollingDown(true);
+      } else {
+        setScrollingDown(false);
+      }
+      setPrevScroll(window.scrollY);
     }
   }
 
@@ -41,6 +49,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     layoutClasses.push(style.stick_to_top)
   } else {
     layoutClasses.push(style.unstick_from_top)
+  }
+
+  if (scrollingDown && !hovered) {
+    layoutClasses.push(style.layout_up);
   }
 
   return (

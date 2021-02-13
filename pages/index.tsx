@@ -1,9 +1,7 @@
 import { Layout } from '../components'
-import { useRouter } from 'next/router';
-
 import React, { MutableRefObject, useRef } from 'react';
 
-import { simpleScrollingParallaxScreen, doubleSlidingParallaxScreen } from '../components/parallax/parallax';
+import * as parallax from '../components/parallax/parallax';
 
 export default function Home() {
   const element1 = useRef(null);
@@ -16,19 +14,19 @@ export default function Home() {
 
         <div ref={element1}>
           {
-            simpleScrollingParallaxScreen('/images/top_page_bg.jpg', 100, createFirstContent(), scrollTo, element2)
+            parallax.simpleScrollingParallaxScreen('/images/one_man_walking.jpg', 300, createFirstContent(), scrollTo, element2)
           }
         </div>
 
         <div ref={element2}>
           {
-            doubleSlidingParallaxScreen('/images/ski_main_page_slide.jpg', createSecondContent(), scrollTo, element3)
+            parallax.simpleSlidingParallaxScreen('/images/one_man_walking_large_landscape_cropped.jpg', createSecondContent(), scrollTo, element3)
           }
         </div>
 
         <div ref={element3}>
           {
-            simpleScrollingParallaxScreen('/images/ski_main_page_mountains_2.jpg', 300, createThirdContent(), scrollTo, element1)
+            parallax.simpleScrollingParallaxScreen('/images/one_man_standing.jpg', 300, createThirdContent(), scrollTo, element1)
           }
         </div>
 
@@ -38,7 +36,9 @@ export default function Home() {
 }
 
 const scrollTo = (element: MutableRefObject<any>) => {
-  element.current.scrollIntoView()  
+  element.current.scrollIntoView()
+  //Wait for menu to leave the page
+  setTimeout(() => {element.current.scrollIntoView()}, 300);
 }
 
 const createFirstContent = () => {
@@ -63,20 +63,21 @@ const createFirstContent = () => {
 const createSecondContent = () => {
 
   return (
-    <>
-      <div>
-      Konchichiwa!! “Arigatou” for visiting our site.
-      “Japow line” shows the informations of Backcountry-skiing, Ski-touring, Freeriding and off-piste.
-      We would like to help you find the correct information about Backcountry skiing in Japan, like routes, regional rules, weather and avalanche information.
-      Have a Nice Japow!!
-      <br/>
-      The information presented on Japow line is subject to uncertainties.
-      Therefore Japow line must not be the only criterion to access a slope.
-      Japow line does not guarantee the correctness of the information.
-      Any liability for accidents and damages in connection with the use of Japow is excluded.
-      The planning and execution of your winter sports activities is at your own risk and under your sole responsibility.
+    <div className="top_page_second_screen">
+      <div className="welcoming_message">
+        Konchichiwa!! “Arigatou” for visiting our site.<br/>
+        “Japow line” shows the informations of Backcountry-skiing, Ski-touring, Freeriding and off-piste.<br/>
+        We would like to help you find the correct information about Backcountry skiing in Japan, like routes, regional rules, weather and avalanche information.<br/>
+        Have a Nice Japow!!<br/>
       </div>
-    </>
+      <div className="warning_message">
+        The information presented on Japow line is subject to uncertainties.<br/>
+        Therefore Japow line must not be the only criterion to access a slope.<br/>
+        Japow line does not guarantee the correctness of the information.<br/>
+        Any liability for accidents and damages in connection with the use of Japow is excluded.<br/>
+        The planning and execution of your winter sports activities is at your own risk and under your sole responsibility.<br/>
+      </div>
+    </div>
   );
 }
 
@@ -84,7 +85,9 @@ const createThirdContent = () => {
 
   return (
     <>
-      
+      <div>
+        
+      </div>
     </>
   );
 }

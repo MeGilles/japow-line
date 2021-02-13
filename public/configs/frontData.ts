@@ -4,7 +4,7 @@ export const frontData = {
         unit: "rem",
     },
     menuButtonsTotalMaxWidth: {
-        value: 70,
+        value: 80,
         unit: "%"
     },
     images : {

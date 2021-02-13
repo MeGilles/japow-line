@@ -4,11 +4,11 @@
   } 
   49% {
     position: fixed;
-    transform: translate(0, -4rem);
+    //transform: translate(0, -4rem);
   } 
   50% {
     position: relative;
-    transform: translate(0, 0rem);
+    //transform: translate(0, 0rem);
     margin-top: -4rem;
     height: 4rem;
   }
@@ -24,19 +24,13 @@
     position: relative;
     height: 4rem;
   }
-  49% {
+  99% {
     position: relative;
     height: 0;
-  }
-  50% {
-    position: fixed;
-    height:4rem;
-    transform: translate(0, -4rem);
   }
   100% {
     position: fixed;
     height:4rem;
-    transform: translate(0, 0rem);
   }
 }
 
@@ -50,10 +44,16 @@
 
   background-color: white;
   box-shadow: 0 2px 4px -1px gray;
+
+  transition: transform 0.5s ease-in-out;
+}
+
+.layout_up {
+  transform: translate(0, -4rem);
 }
 
 .stick_to_top {
-  animation: stickNavbar 0.3s forwards;
+  animation: stickNavbar 1s forwards;
 }
 
 .unstick_from_top {
