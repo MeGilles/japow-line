@@ -2,6 +2,7 @@
 
 # Prisma
 /prisma/migrations
+/prisma/devdb.db
 
 # dependencies
 /node_modules
@@ -36,3 +37,4 @@ yarn-error.log*
 # vercel
 .vercel
 
+/pages/dist
