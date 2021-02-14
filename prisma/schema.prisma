@@ -44,12 +44,6 @@ model BarChart {
     id      Int   @default(autoincrement()) @id
 }
 
-model Mountain{
-  id      Int      @default(autoincrement()) @id
-  name    String   @unique
-  name_jp String?  @unique
-}
-
 // hierarchical places for instance : Alps > Mont Blanc massif > Dent du Géant
 model Location{
    id       Int        @default(autoincrement()) @id
@@ -58,7 +52,7 @@ model Location{
    parentId Int?     
    
    name     String     @unique
-   name_jp  String     @unique
+   name_jp  String?     @unique
 }
 
 model Route {
@@ -81,8 +75,8 @@ model Route {
   picturesPath        String[]  //the paths to pictures  
   routePoints         String[]  //list of location points as string //for instance  [Chambéry, St Pierre d'Albigny, Col du Frêne, Chambéry]
 
-  mountain            Mountain?      @relation(fields: [mountainId], references: [id])
-  mountainId          Int?
+  location            Location?     @relation(fields: [locationId], references: [id])
+  locationId          Int?
 
   routeType           RouteType?     @relation(fields: [routeTypeId], references: [id])
   routeTypeId         Int?

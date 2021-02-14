@@ -1,7 +1,3 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
-import * as db from '../database'
 import { Layout } from '../components'
 import React, { MutableRefObject, useRef } from 'react';
 
@@ -97,11 +93,3 @@ const createThirdContent = () => {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  await db.utils.dropAll();
-  db.utils.PopulateDb();
-  //await db.utils.printDbContents();
-  return {
-    props: {}, // will be passed to the page component as props
-  }
-}
