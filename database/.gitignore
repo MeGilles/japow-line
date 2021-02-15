@@ -1,0 +1,4 @@
+node_modules
+postgres
+bin
+prisma/migrations
