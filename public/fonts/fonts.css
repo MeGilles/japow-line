@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Anton";
+  src: url("Anton/Anton-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url("Rubik/static/Rubik-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Permanent Marker";
+  src: url("Permanent_Marker/PermanentMarker-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Passion One";
+  src: url("Passion_One/PassionOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Staatliches";
+  src: url("Staatliches/Staatliches-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Orion Esperanto";
+  src: url("Orion_Esperanto/Orion\ Esperanto\ Dika.ttf");
+}

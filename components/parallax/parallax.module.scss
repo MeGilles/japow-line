@@ -1,3 +1,5 @@
+@import "/styles/theme.scss";
+
 .simple_scrolling_parallax_screen {
   .expander {
     width: 100vw;
@@ -51,7 +53,7 @@
 
     width: 50%;
 
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba($theme_main_color, 1);
 
     padding: 3rem;
 

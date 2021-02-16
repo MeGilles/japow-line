@@ -3,7 +3,7 @@ import { useTrail, animated } from "react-spring";
 import { useRouter } from 'next/router'
 
 import styles from "./menu.module.scss";
-import MyButton from "../myButton";
+import MenuButton from "./menuButton";
 import * as FakeMenu from '../../FakeContent/FakeMenu';
 
 type Props = {
@@ -12,13 +12,7 @@ type Props = {
   subsections: FakeMenu.fakeMenu[];
   size?: any;
 }
-
 export default function Menu(props: Props) {
-
-  let name = props.name !== undefined ? props.name : "unnamed";
-  let redirection = props.redirection !== undefined ? props.redirection : "/";
-  let subsections = props.subsections !== undefined ? props.subsections : [];
-  let size = props.size !== undefined ? props.size : "auto";
 
   const [open, setOpen] = useState(false);
 
@@ -28,9 +22,9 @@ export default function Menu(props: Props) {
 
   const router = useRouter();
 
-  const trail = useTrail(subsections.length, {
+  const trail = useTrail(props.subsections.length, {
     reset: open ? false : true,
-    config: { duration: 300 },
+    config: { duration: 200 },
     visibility: open ? "visible" : "hidden",
     opacity: open ? 1 : 0,
     maxHeight: open ? "100vh" : "0vh",
@@ -41,9 +35,9 @@ export default function Menu(props: Props) {
       className={styles.menu_container}
       onMouseEnter={toggleMenu}
       onMouseLeave={toggleMenu}
-      style={{width: size}}
+      style={{width: props.size}}
     >
-      <MyButton name={name} isHovered={open} isMenuButton={true} isMenuOpened={open} click={() => router.push(redirection)} />
+      <MenuButton name={props.name} isHovered={open} isExpandMenuButton={true} isExpandMenuOpened={open} click={() => router.push(props.redirection)} />
       <div
         className={styles.menu_content_container}
         style={{ opacity: open ? 1 : 0 }}
@@ -54,10 +48,17 @@ export default function Menu(props: Props) {
             className={styles.button_container}
             key={index}
           >
-            <MyButton name={subsections[index].name} click={() => router.push(subsections[index].redirection)} textAlign={'left'} />
+            <MenuButton name={props.subsections[index].name} click={() => router.push(props.subsections[index].redirection)} orientation={'horizontal'} textAlign={'left'} />
           </animated.div>
         ))}
       </div>
     </div>
   );
+}
+
+Menu.defaultProps = {
+  name: "unnamed",
+  redirection: "/",
+  subsections: [],
+  size: "auto"
 }

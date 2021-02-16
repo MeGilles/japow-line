@@ -1,0 +1,58 @@
+@import "/styles/theme.scss";
+
+.myButton {
+  position: relative;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  padding: 1.2rem;
+
+  color: $theme_secondary_color;
+  text-align: center;
+  font-size: $menu_text_size;
+
+  cursor: pointer;
+
+  background-color: $theme_main_color;
+  transition: background-position 0.1s ease-out, color 0.2s ease-out;
+
+  &:hover {
+    color: $theme_text_secondary_color;
+  }
+
+  .expand_more_container {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .expand_more_icon {
+      width: 20px;
+    }
+  }
+}
+
+
+.vertical_slider {
+  background: linear-gradient($theme_secondary_color 50%, $theme_main_color 50%);
+  background-size: 100% 200%;
+  background-position: left bottom;
+
+  &:hover {
+    background-position: top;
+  }
+}
+
+.horizontal_slider {
+  background: linear-gradient(to left, $theme_main_color 50%, $theme_secondary_color 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+
+  transition: background-position 0.2s ease-out, color 0.2s ease-out;
+
+  &:hover {
+    background-position: left;
+  }
+}
