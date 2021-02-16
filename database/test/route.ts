@@ -1,4 +1,4 @@
-import {assertTrue, indenticalStringArrays} from '.'
+import { assertTrue, indenticalStringArrays, matchAndRemove } from '.'
 import * as db from '..'
 
 export async function test_getFullPath() {
@@ -28,16 +28,44 @@ export async function test_getFullPath() {
 
 export async function test_getAllRoutesPaths() {
     const all = await db.route.getAllRoutesPaths();
+    let expected = [
+        ['Alps', 'Mont Blanc massif', 'Mont Blanc', 'Tour au mont Blanc'],
+        ['Alps', 'Mont Blanc massif', 'Dent du Géant', 'Tour dans le Vercors'],
+        ['Massif Central', 'Chaîne des Puys', 'Puy de Dôme', 'Tour au puits de dome'],
+        ['Alps', 'Mont Blanc massif', 'Mont Blanc', 'Tour de test avec plein de trucs qui manquent'],
+    ]
 
-    let res = indenticalStringArrays(all[0], ['Alps', 'Mont Blanc massif', 'Mont Blanc', 'Tour au mont Blanc']);
-    assertTrue(res, "getAllRoutes 1 Tour au mont Blanc");
+    try {
+        for (let i = 0; i < all.length; i++) {
+            let found = false;
+            expected = matchAndRemove(all[i], expected);
+        }
+        assertTrue(expected.length == 0, "getAllRoutesPaths returned all paths")
+    } catch {
+        assertTrue(false, "getAllLocationsPaths")
+    }
+}
 
-    res = indenticalStringArrays(all[1], ['Alps', 'Mont Blanc massif', 'Dent du Géant', 'Tour dans le Vercors']);
-    assertTrue(res, "getAllRoutes 2 Tour au mont Blanc");
+export async function test_getAllLocationsPaths() {
+    const all = await db.route.getAllLocationsPaths();
+    let expected = [
+        ['Alps'],
+        ['Alps', 'Mont Blanc massif'],
+        ['Alps', 'Mont Blanc massif', 'Dent du Géant'],
+        ['Alps', 'Mont Blanc massif', 'Mont Blanc'],
+        ['Alps', 'Vercors'],
+        ['Alps', 'Ecrins'],
+        ['Massif Central'],
+        ['Massif Central', 'Chaîne des Puys'],
+        ['Massif Central', 'Chaîne des Puys', 'Puy de Dôme']
+    ]
 
-    res = indenticalStringArrays(all[2], ['Massif Central', 'Chaîne des Puys', 'Puy de Dôme', 'Tour au puits de dome']);
-    assertTrue(res, "getAllRoutes 3 Tour au puits de dome");
-
-    res = indenticalStringArrays(all[3], ['Alps', 'Mont Blanc massif', 'Mont Blanc', 'Tour de test avec plein de trucs qui manquent']);
-    assertTrue(res, "getAllRoutes 4 Tour de test avec plein de trucs qui manquent");
+    try {
+        for (let i = 0; i < all.length; i++) {
+            expected = matchAndRemove(all[i], expected);
+        }
+        assertTrue(expected.length == 0, "getAllLocationsPaths returned all paths")
+    } catch {
+        assertTrue(false, "getAllLocationsPaths")
+    }
 }

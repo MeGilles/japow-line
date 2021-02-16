@@ -30,7 +30,11 @@ export type RouteWithAllDataIncludingLocalization = Prisma.RouteGetPayload<{
     }
 }>
 
-
+export type BasicPageData = {
+    name : string,
+    name_jp : string,
+    path : string[],
+}
 
 // Define a type that only contains a subset of the scalar fields
 type UserPersonalData = Prisma.UserGetPayload<{
