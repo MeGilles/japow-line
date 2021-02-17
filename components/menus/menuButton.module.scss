@@ -37,7 +37,7 @@
 
 .vertical_slider {
   background: linear-gradient($theme_secondary_color 50%, $theme_main_color 50%);
-  background-size: 100% 200%;
+  background-size: 100% 201%;
   background-position: left bottom;
 
   &:hover {
@@ -47,7 +47,7 @@
 
 .horizontal_slider {
   background: linear-gradient(to left, $theme_main_color 50%, $theme_secondary_color 50%);
-  background-size: 200% 100%;
+  background-size: 201% 100%;
   background-position: right bottom;
 
   transition: background-position 0.2s ease-out, color 0.2s ease-out;

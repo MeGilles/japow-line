@@ -44,13 +44,15 @@
 
 .layout {
   position: fixed;
+  top: 0;
+  left: 0;
 
   width: 100%;
   height: $menu_height;
   
   z-index: 99;
 
-  transition: transform 0.3s ease-out, opacity 0.4s ease-out;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
 
   transform: translate(0, 0);
 

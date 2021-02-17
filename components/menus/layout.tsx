@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const handleScroll = () => {
     //Only when the page requires scrolling
-    if (window.scrollY === 0 && window.document.body.offsetHeight > window.innerHeight) {
+    if (window.scrollY === 0) {
       setStickToTop(true);
     } else {
       setStickToTop(false);

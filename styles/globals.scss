@@ -9,6 +9,16 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   scroll-behavior: smooth;
   overflow-x: hidden;
+
+  ::selection {
+    color: $theme_text_secondary_color;
+    background: $theme_secondary_color;
+  }
+
+  ::-moz-selection {
+    color: $theme_text_secondary_color;
+    background: $theme_secondary_color;
+  }
 }
 
 a {
@@ -35,7 +45,7 @@ a {
   .top_text {
     position: absolute;
 
-    top: 4.5rem;
+    top: 5rem;
     left: 2rem;
 
     .title {
@@ -44,7 +54,7 @@ a {
 
     .subtitle {
       font-family: "Permanent Marker";
-      font-size: 4rem;
+      font-size: 3rem;
       font-style: oblique;
       text-indent: 4rem;
     }
