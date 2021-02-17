@@ -1,0 +1,30 @@
+@import "/styles/theme.scss";
+
+.login_button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 9%;
+
+  height: 60%;
+  width: 140px;
+
+  cursor: pointer;
+
+  color: white;
+  font-size: 1.5rem;
+
+  background-color: $theme_secondary_color;
+  background: linear-gradient(to left, $theme_secondary_color 50%, $theme_alternative_color 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+
+  transition: background-position 0.2s ease-out;
+
+  border: none;
+  border-radius: 2px;
+
+  &:hover {
+    background-position: left;
+  }
+}

@@ -8,7 +8,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 
-import { Layout } from '../../components';
+import { Layout, TopBanner } from '../../components';
 import { FakeItinerary } from '../../FakeContent/FakeItinerary';
 import style from "./[id].module.scss";
 
@@ -21,22 +21,132 @@ export default function Route({ routeData }) {
             <Head>
                 <title>{FakeItinerary.title.name}</title>
             </Head>
-            <div className={style.container}>
+            <TopBanner />
+            <div className={style.route_container}>
                 <pre>{JSON.stringify(routeData)}</pre>
-                <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                    {FakeItinerary.title.categories.map((category, index) => {
+                <div className={style.navigation}>
+                    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
+                        {FakeItinerary.title.categories.map((category, index) => {
 
-                        path += category + "/";
+                            path += category + "/";
 
-                        return (
-                            <div key={index}>
-                                <Link href={path}>
-                                    {category}
-                                </Link>
+                            return (
+                                <div key={index}>
+                                    <Link href={path}>
+                                        {category}
+                                    </Link>
+                                </div>
+                            );
+                        })}
+                    </Breadcrumbs>
+                </div>
+                <div className={style.route_core}>
+                    <div className={style.main_information}>
+                        <div className={style.title}>
+                            {routeData.routeName}
+                        </div>
+                        <div className={style.content}>
+                            <div className={style.textual_information}>
+                                <div className={style.info_item}>
+                                    Mountain:
+                                    <div className={style.value}>
+                                        {routeData.mountain.name}
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Month recommended:
+                                    <div className={style.value}>
+
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Route type:
+                                    <div className={style.value}>
+                                        {routeData.routeType.name}
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Altitude zone:
+                                    <div className={style.value}>
+
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Difference in elevation:
+                                    <div className={style.value}>
+
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Maximum altitude:
+                                    <div className={style.value}>
+                                        {routeData.maxAltitude}m
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Minimum altitude:
+                                    <div className={style.value}>
+                                        {routeData.minAltitude}m
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Total distance:
+                                    <div className={style.value}>
+                                        {routeData.totalDistance}m
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Distance of elevation:
+                                    <div className={style.value}>
+                                        {routeData.elevationDistance}m
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Distance of decent:
+                                    <div className={style.value}>
+                                        {routeData.decentDistance}m
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Start point:
+                                    <div className={style.value}>
+                                        {routeData.startPointType.name}
+                                    </div>
+                                </div>
+                                <div className={style.info_item}>
+                                    Goal point:
+                                    <div className={style.value}>
+
+                                    </div>
+                                </div>
                             </div>
-                        );
-                    })}
-                </Breadcrumbs>
+                            <div className={style.graphical_information}>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className={style.other_information}>
+                        <div className={style.route_information}>
+                            <div className={style.title}>
+                                Route Information
+                            </div>
+                            <div className={style.info_item}>
+                                {routeData.routeDescription}
+                            </div>
+                        </div>
+                        <div className={style.area_information}>
+                            <div className={style.title}>
+                                Area Information
+                            </div>
+                            <div className={style.info_item}>
+                                Nothing Yet
+                            </div>
+                        </div>
+                    </div>
+                    <div className={style.recent_information}>
+
+                    </div>
+                </div>
             </div>
         </Layout>
     )

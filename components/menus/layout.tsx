@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
+import Head from 'next/head';
 
 import style from "./layout.module.scss";
 import TopBar from "./topBar";
 
-const name = "[Your Name]";
 export const siteTitle = "Next.js Sample Website";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -23,6 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   const handleScroll = () => {
+    //Only when the page requires scrolling
     if (window.scrollY === 0) {
       setStickToTop(true);
     } else {
@@ -43,6 +43,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
   }, [handleScroll])
 
+  useEffect(() => {
+    handleScroll();
+  }, [])
+
   let layoutClasses = [style.layout];
 
   if (stickToTop) {
@@ -56,7 +60,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <>
+    <> 
+    <Head>
+    </Head>
       <header className={layoutClasses.join(" ")} onMouseEnter={hover} onMouseLeave={unHover} >
         <TopBar />
       </header>

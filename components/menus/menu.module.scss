@@ -1,3 +1,5 @@
+@import "/styles/theme.scss";
+
 .menu_container {
   position: relative;
   display: flex;
@@ -22,5 +24,5 @@
   //Icy effect when expanding
   background-color: #c7e3f5;
 
-  border-left: 5px solid #c7e3f5;
+  border-left: 5px solid $theme_secondary_color;
 }

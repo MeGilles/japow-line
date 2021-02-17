@@ -1,0 +1,22 @@
+@import "/styles/theme.scss";
+
+.classic_button {
+    width: 100%;
+
+    color: $theme_text_secondary_color;
+    font-size: $button_text_size;
+    text-align: center;
+
+    border: none;
+    border-radius: 2px;
+
+    background-color: $theme_secondary_color;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $theme_alternative_color;
+    }
+}

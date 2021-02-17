@@ -1,14 +1,15 @@
 import React from "react";
 import { useRouter } from 'next/router'
 import Avatar from "@material-ui/core/Avatar";
-import { signIn, useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 
 import frontData from "../../public/configs/frontData";
 
-import styles from "./topBar.module.scss";
+import style from "./topBar.module.scss";
 import * as FakeMenu from "../../FakeContent/FakeMenu";
 import Menu from "./menu";
-import MyButton from "../myButton";
+import MenuButton from "./menuButton";
+import LoginButton from "./loginButton";
 import ElasticGlue from "../utils/elasticGlue";
 
 var buttonsNbr: number = FakeMenu.FakeMenu.length;
@@ -27,8 +28,8 @@ export default function TopBar() {
   const router = useRouter();
 
   return (
-    <div className={styles.menu_container}>
-      <img src={frontData.images.logo} alt="logo" onClick={() => router.push("/")} />
+    <div className={style.menu_container}>
+      <img className={style.logo} src={frontData.images.logo} alt="logo" onClick={() => router.push("/")} />
 
       <ElasticGlue width={leftGlueSize} />
 
@@ -42,19 +43,20 @@ export default function TopBar() {
             key={index}
           />
         ) : (
-          <MyButton name={menuSection.name} size={buttonSize} click={() => router.push(menuSection.redirection)} key={index} />
+          <MenuButton name={menuSection.name} size={buttonSize} click={() => router.push(menuSection.redirection)} key={index} />
         );
       })}
 
       <ElasticGlue width={rightGlueSize} />
 
-      {
-        session ?
-          <Avatar alt="NAME" src={session.profile} />
-        : 
-          <MyButton name={"sign in"} click={() => signIn()} size={"10%"} />
-      }
-      
+      <div className={style.login_space}>
+        {
+          session ?
+            <Avatar alt="NAME" src={session.profile} />
+            :
+            <LoginButton />
+        }
+      </div>
     </div>
   );
 }

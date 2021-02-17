@@ -1,0 +1,10 @@
+@import "/styles/theme.scss";
+
+.top_banner {
+    height: $menu_height;
+    width: 100%;
+
+    background-image: url("/images/snowy_mountains.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
