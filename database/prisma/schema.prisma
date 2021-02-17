@@ -2,32 +2,38 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./devdb.db"
+  provider = "postgres"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
+// for instance : Go&Return, Round-trip, Traverse, Several days
 model RouteType{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
+  id      Int      @default(autoincrement()) @id
+  name    String   @unique
   name_jp String?  @unique
 }
 
+// for instance: Ex,Alpine, Forest-limit, Below Forest-limit , Area not covered by snow
 model AltitudeZone{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
+  id      Int      @default(autoincrement()) @id
+  name    String   @unique
   name_jp String?  @unique
 
 }
 
+// used for start and end points
+// for instance : Ex, Big Parking / Parking limited / Top of ski-area
 model PointType{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
+  id      Int      @default(autoincrement()) @id
+  name    String   @unique
   name_jp String?  @unique
 
+  start Route[]  @relation("Start")
+  end   Route[]  @relation("End")
 }
 
 model Map_ {
@@ -38,70 +44,76 @@ model BarChart {
     id      Int   @default(autoincrement()) @id
 }
 
-model Mountain{
-  id      Int     @default(autoincrement()) @id
-  name    String  @unique
-  name_jp String?  @unique
-}
+// hierarchical places for instance : Alps > Mont Blanc massif > Dent du Géant
+model Location{
+   id       Int        @default(autoincrement()) @id
 
-// model Location{
-//   id      Int     @default(autoincrement()) @id
-//   name    String  @unique
-//   name_jp String  @unique
-// }
+   parent   Location?  @relation(fields: [parentId], references: [id])
+   parentId Int?     
+   
+   name     String     @unique
+   name_jp  String?     @unique
+}
 
 model Route {
   id                  Int            @default(autoincrement()) @id
-  mountain            Mountain       @relation(fields: [mountainId], references: [id])
-  mountainId          Int
 
-  routeType           RouteType      @relation(fields: [routeTypeId], references: [id])
-  routeTypeId         Int
+  name                String          @unique
+  name_jp             String          @unique
 
-  altitudeZone        AltitudeZone?   @relation(fields: [altitudeZoneId], references: [id])
+  description         String?
+  description_jp      String?
+
+  elevationDifference Int?
+  maxAltitude         Int?
+  minAltitude         Int?
+  totalDistance       Int?
+  elevationDistance   Int?
+  decentDistance      Int?
+
+  recomendedMonth     Int[] //numbers between 1 and 12
+  picturesPath        String[]  //the paths to pictures  
+  routePoints         String[]  //list of location points as string //for instance  [Chambéry, St Pierre d'Albigny, Col du Frêne, Chambéry]
+
+  location            Location?     @relation(fields: [locationId], references: [id])
+  locationId          Int?
+
+  routeType           RouteType?     @relation(fields: [routeTypeId], references: [id])
+  routeTypeId         Int?
+
+  altitudeZone        AltitudeZone?  @relation(fields: [altitudeZoneId], references: [id])
   altitudeZoneId      Int?
 
-  startPointType      PointType?      @relation(fields: [startPointTypeId], references: [id])
+  startPointType      PointType?    @relation("Start", fields: [startPointTypeId], references: [id])
   startPointTypeId    Int?
 
-  //endPointType        PointType       @relation(fields: [endPointTypeId], references: [id])
-  //endPointTypeId      Int 
+  endPointType        PointType?   @relation(name: "End", fields: [endPointTypeId], references: [id])
+  endPointTypeId      Int?
 
-  map                 Map_?           @relation(fields: [mapId], references: [id])
-  mapId               Int?            @unique
+  map                 Map_?          @relation(fields: [mapId], references: [id])
+  mapId               Int?            
 
-  barChart            BarChart?       @relation(fields: [barChartId], references: [id])
-  barChartId          Int?            @unique
-
-  //routePoints         String? list of location points
-
-  routeName           String          @unique
-  routeName_jp        String?         @unique
-
-
-  routeDescription    String
-  routeDescription_jp String?
-
-  elevationDifference Int
-  maxAltitude         Int
-  minAltitude         Int
-  totalDistance       Int
-  elevationDistance   Int
-  decentDistance      Int
+  barChart            BarChart?      @relation(fields: [barChartId], references: [id])
+  barChartId          Int?            
 }
 
+//a post on a route page
 model Post {
   id              Int      @default(autoincrement()) @id
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   title           String?
   content         String
-  // ?? published Boolean  @default(false)
+  picturesPath    String[]
+
+  route           Route    @relation(fields: [routeId], references: [id])
+  routeId         Int
+
   author          Account  @relation(fields: [authorId], references: [id])
   authorId        Int
 }
 
-//bellow models used by next-auth
+//models bellow are used by next-auth
 
 model Account {
   id                 Int       @default(autoincrement()) @id
