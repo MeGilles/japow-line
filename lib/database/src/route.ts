@@ -1,4 +1,4 @@
-import { prisma, types } from '../';
+import { prisma, types } from '..';
 import { BasicPageData } from './types';
 
 /**

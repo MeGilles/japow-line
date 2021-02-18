@@ -1,4 +1,5 @@
 import { prisma } from '..';
+import { hashNewPassword } from '../../passwordhasher';
 
 /**
  * Put automatically some data in the database. If sample data is already present, noting is done.
@@ -142,6 +143,32 @@ export async function populateDb() {
             barChart: { create: {} },
         }
     });
+
+
+    await prisma.user.create({
+        data: {
+            name : "John Doe",
+            email : "john.doe@example.com",
+            //hint : password is "test"
+            hashedPassword : "0a59762d3d204305d3390344d277699ac95a21973fdb7eb21a75e473fdb2c46b57b1d2ff074dd9b0717b3dd84515db4da6862834cb455f39d6e4478da34bbae0",
+            hashedPasswordSalt : "8951d1e529bd1029420f0d90",
+            image : "/public/userdata/profilepicture/a413b92646b6d3b48fb7f3683761131ac24c1e6e.jpeg"
+        }
+    });
+
+    await prisma.user.create({
+        data: {
+            name : "Jane Doe",
+            email : "jane.doe@test.com",
+            //hint : password is "password"
+            hashedPassword : "9e11feae352c89ae52f1ed44acdf9363994b463c3226b01e352712f4665f7eb8e74db85b9fd4dd9f4fa76017dc9ced0f9fa00b347343aa42fb95b23627305ae5",
+            hashedPasswordSalt : "fa23056daf22a27e1e5358ba",
+            image : "/public/userdata/profilepicture/1991b19a98b5e97bf15bd9ced2072d8823c49c27.jpeg"
+        }
+    });
+
+
+
     console.log("database populated")
 }
 
@@ -195,6 +222,7 @@ export function printDbContents() : void {
  * Empty the database
  */
 export async function dropAll() {
+    await prisma.user.deleteMany({});
     await prisma.route.deleteMany({});
     await prisma.routeType.deleteMany({});
     await prisma.altitudeZone.deleteMany({});

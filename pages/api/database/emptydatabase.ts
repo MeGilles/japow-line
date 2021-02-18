@@ -1,6 +1,6 @@
-import {utils} from '../../database'
+import {utils} from '../../../lib/database'
 
 export default async (req, res) => {
-    await utils.populateDb();
+    await utils.dropAll();
     res.status(200).json(await utils.dumpDbContents());
 }

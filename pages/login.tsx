@@ -53,77 +53,73 @@ export default function login({ providers }) {
       isValid = false;
       errors["password"] = "Please enter a password.";
     } else if (password.length < 8) {
-        isValid = false;
-        errors["password"] = "Password must be at least 8-characters long.";
+      isValid = false;
+      errors["password"] = "Password must be at least 8-characters long.";
     }
 
 
-  setErrors(errors);
+    setErrors(errors);
 
-  if (isValid) {
-    if (rememberMe) {
-      //TO DO
-      signIn();
-    } else {
-      signIn();
+    if (isValid) {
+      // if (rememberMe) { signIn(); } else { signIn(); } //TODO
+      signIn(providers.credentials.id, {email, password});
     }
   }
-}
 
-return (
-  <Layout>
-    <Head>
+  return (
+    <Layout>
+      <Head>
         <title>Login</title>
-    </Head>
-    <div className={style.login_wrapper}>
-      <div className={style.connections_container}>
-        <div className={style.title}>
-          LOGIN
+      </Head>
+      <div className={style.login_wrapper}>
+        <div className={style.connections_container}>
+          <div className={style.title}>
+            LOGIN
           </div>
-        <div className={style.form}>
-          <form onSubmit={handleSubmit} autoComplete="on">
-            <div className={style.form_group}>
-              <InputTextField name="Email" value={email} onChange={inputEmail} />
-              <div className={style.form_error_field}>
-                {errors["email"]}
+          <div className={style.form}>
+            <form onSubmit={handleSubmit} autoComplete="on">
+              <div className={style.form_group}>
+                <InputTextField name="Email" value={email} onChange={inputEmail} />
+                <div className={style.form_error_field}>
+                  {errors["email"]}
+                </div>
               </div>
-            </div>
-            <div className={style.form_group}>
-              <InputTextField name="Password" value={password} onChange={inputPassword} type="password" />
-              <div className={style.form_error_field}>
-                {errors["password"]}
+              <div className={style.form_group}>
+                <InputTextField name="Password" value={password} onChange={inputPassword} type="password" />
+                <div className={style.form_error_field}>
+                  {errors["password"]}
+                </div>
               </div>
-            </div>
-            <div className={style.form_group}>
-              <InputCheckbox state={rememberMe} onChange={handleRememberMe} />
-            </div>
-            <div className={style.button_container}>
-              <ClassicButton className={style.login_button} type="submit" width="70%">Login</ClassicButton>
-            </div>
-          </form>
-        </div>
-        <div className={style.login_alternatives}>
-          Or login with
+              <div className={style.form_group}>
+                <InputCheckbox state={rememberMe} onChange={handleRememberMe} />
+              </div>
+              <div className={style.button_container}>
+                <ClassicButton className={style.login_button} type="submit" width="70%">Login</ClassicButton>
+              </div>
+            </form>
+          </div>
+          <div className={style.login_alternatives}>
+            Or login with
               <div className={style.other_providers}>
-            {Object.values(providers).map((provider: SessionProvider) => (
-              acceptedProviders.includes(provider.id) &&
-              <ClassicButton className={style.provider} onClick={() => signIn(provider.id)} width="47%" key={provider.name}>
-                {provider.name}
-              </ClassicButton>
-            ))}
+              {Object.values(providers).map((provider: SessionProvider) => (
+                acceptedProviders.includes(provider.id) &&
+                <ClassicButton className={style.provider} onClick={() => signIn(provider.id)} width="47%" key={provider.name}>
+                  {provider.name}
+                </ClassicButton>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className={style.sign_up}>
-          Not registered yet ?
+          <div className={style.sign_up}>
+            Not registered yet ?
               {' '}
-          <Link href="/signUp">
-            <span className={style.link}>Sign up now !</span>
-          </Link>
+            <Link href="/signUp">
+              <span className={style.link}>Sign up now !</span>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
-  </Layout>
-)
+    </Layout>
+  )
 }
 
 export const getStaticProps: GetStaticProps = async () => {

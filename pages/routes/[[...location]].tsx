@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
-import * as db from '../../database'
+import * as db from '../../lib/database'
 
 import Link from "next/link";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
