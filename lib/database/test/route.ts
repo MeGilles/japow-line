@@ -1,6 +1,10 @@
 import { assertTrue, indenticalStringArrays, matchAndRemove } from '.'
 import * as db from '..'
 
+/**
+ * The title of functions in this file are self explanatory 
+ */
+
 export async function test_getFullPath() {
     //with places
     let a = await db.route.getFullPathFromName("Alps");

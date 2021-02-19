@@ -209,6 +209,10 @@ export async function getFullPathFromName(name: string): Promise<string[]> {
     return [name];
 }
 
+/**
+ * Returns true if the name provided is a location.
+ * @param name 
+ */
 export function isLocation(name: string): Promise<Boolean> {
     return prisma.location.findFirst({
         where: {

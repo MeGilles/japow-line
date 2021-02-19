@@ -26,6 +26,7 @@ export async function changePassword(email: string, hashedPassword: string, salt
 /**
  * get the password data from an user
  * @param email 
+ * @return the hashed password and the salt used in the hash algorithm
  */
 export async function getPassword(email: string) : Promise<hashedPassword> {
     let data = await prisma.user.findUnique({
