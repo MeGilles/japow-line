@@ -1,0 +1,23 @@
+@import "/styles/theme.scss";
+
+.close_cross {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+  z-index: 5;
+
+  cursor: pointer;
+
+  border-radius: 50%;
+  background-color: $theme_secondary_color;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  transition: 0.3s;
+
+  &:hover {
+    background-color: $theme_alternative_color;
+  }
+}

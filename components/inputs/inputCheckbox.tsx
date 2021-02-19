@@ -20,7 +20,7 @@ export default function InputCheckbox({ state, onChange }: Props) {
             checked={state}
             onChange={onChange}
             name="checkBox"
-            color="primary"
+            color="secondary"
           />
         }
         label="Remember me"

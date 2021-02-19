@@ -1,0 +1,180 @@
+@import "/styles/theme.scss";
+
+@keyframes growBig {
+  from {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0.5;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes showGallery {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.image {
+  object-fit: cover;
+}
+
+.fullscreen_slider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: $theme_transparent_dark;
+
+  //1 before the menu (99)
+  z-index: 100;
+}
+
+.main_image_viewport {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+
+  width: 90vw;
+  height: 80vh;
+
+  transform: translate(-50%, -50%);
+
+  animation: growBig 0.3s ease-out forwards;
+}
+
+.main_image {
+  object-fit: contain;
+}
+
+.toggle_button {
+  position: absolute;
+
+  top: 95%;
+  left: 2.5%;
+  transform: translate(-50%, -50%);
+
+  z-index: 1;
+
+  cursor: pointer;
+
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: $theme_secondary_color;
+  }
+}
+
+.gallery_list {
+  position: absolute;
+  top: 85%;
+  left: 5%;
+
+  width: 90vw;
+  height: 15vh;
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  transition: height 0.6s ease-out, top 0.6s ease-out;
+
+  &:hover {
+    top: 70%;
+    height: 30vh;
+  }
+
+  .gallery_image_container {
+    width: 5%;
+    height: 90%;
+
+    &:hover {
+      border: 3px solid $theme_secondary_color;
+      width: 30%;
+      z-index: 1;
+
+      .image {
+        filter: brightness(1);
+      }
+    }
+  }
+}
+
+.gallery_extended {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-flow: row wrap;
+
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 1%;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  animation: showGallery 0.5s;
+
+  transition: height 0.6s ease-out, top 0.6s ease-out;
+
+  background-color: black;
+
+  .gallery_image_container {
+    width: 40%;
+    height: 50%;
+
+    &:hover {
+      border: 3px solid $theme_secondary_color;
+      transform: scale(1.1);
+      z-index: 1;
+
+      .image {
+        filter: brightness(1);
+      }
+    }
+  }
+}
+
+.gallery_image_container {
+  position: relative;
+  margin: 2px;
+
+  transition: 0.4s ease-out;
+
+  cursor: pointer;
+
+  .image {
+    filter: brightness(0.7);
+  }
+}
+
+.gallery_image_container_active {
+  .image {
+    filter: brightness(1.1);
+  }
+}

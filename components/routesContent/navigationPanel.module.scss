@@ -1,0 +1,22 @@
+@import "/styles/theme.scss";
+
+.navigation {
+  position: relative;
+  width: 90%;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: $theme_main_color;
+  color: $theme_text_main_color;
+
+  padding: 1rem;
+
+  .text {
+    color: $theme_text_main_color;
+  }
+
+  .breadcrumbs {
+    width: 80%;
+  }
+}

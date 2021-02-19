@@ -1,0 +1,53 @@
+@import "/styles/theme.scss";
+
+.information_panel {
+  .title {
+    font-size: $subtitle_text_size;
+    text-indent: 2rem;
+
+    padding: 5px;
+
+    color: $theme_text_secondary_color;
+    background-color: $theme_secondary_color;
+  }
+
+  .content {
+    padding: 1.5rem;
+
+    display: flex;
+    flex-direction: row;
+
+    .textual_information {
+      width: 60%;
+
+      .info_item {
+        font-size: $global_big_text_size;
+        padding: 6px;
+
+        .value {
+          display: inline-block;
+          text-indent: 10px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .graphical_information {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+
+      .map {
+        background-color: darkgrey;
+        height: 60%;
+        margin: 5px;
+      }
+
+      .elevation_chart {
+        background-color: darkgrey;
+        height: 40%;
+        margin: 5px;
+      }
+    }
+  }
+}

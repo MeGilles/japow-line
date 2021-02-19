@@ -16,7 +16,7 @@ export default function InputTextField({name, required, type, value, onChange}: 
 
     return (
         <ThemeProvider theme={theme}>
-            <TextField label={name} required={required} variant="outlined" value={value} onChange={onChange} type={type}/>
+            <TextField label={name} required={required} variant="outlined" color="secondary" value={value} onChange={onChange} type={type}/>
         </ThemeProvider>
     );
 }

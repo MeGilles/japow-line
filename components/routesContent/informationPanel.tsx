@@ -1,9 +1,8 @@
 import style from './informationPanel.module.scss';
 
 type Props = {
-    routeName: string,
     mountainName: string,
-    monthRecommended: string,
+    recommendedMonth: string,
     routeType: string,
     altitudeZone: string,
     elevationDifference: number,
@@ -19,105 +18,107 @@ type Props = {
 }
 
 export default function InformationPanel({
-    routeName,
-    mountainName, 
-    monthRecommended, 
-    routeType, 
-    altitudeZone, 
-    elevationDifference, 
-    maxAltitude, 
-    minAltitude, 
-    totalDistance, 
-    elevationDistance, 
-    decentDistance, 
-    startPoint, 
-    goalPoint, 
-    map, 
+    mountainName,
+    recommendedMonth,
+    routeType,
+    altitudeZone,
+    elevationDifference,
+    maxAltitude,
+    minAltitude,
+    totalDistance,
+    elevationDistance,
+    decentDistance,
+    startPoint,
+    goalPoint,
+    map,
     elevationChart }: Props) {
 
+
+    const items = [
+        {
+            text: "Mountains:",
+            content: mountainName
+        },
+        {
+            text: "Recommended month:",
+            content: recommendedMonth
+        },
+        {
+            text: "Route type:",
+            content: routeType
+        },
+        {
+            text: "Altitude zone:",
+            content: altitudeZone
+        },
+        {
+            text: "Difference in elevation:",
+            content: elevationDifference,
+            suffix: "m"
+        },
+        {
+            text: "Maximum altitude:",
+            content: maxAltitude,
+            suffix: "m"
+        },
+        {
+            text: "Minimum altitude:",
+            content: minAltitude,
+            suffix: "m"
+        },
+        {
+            text: "Total distance:",
+            content: totalDistance,
+            suffix: "m"
+        },
+        {
+            text: "Distance of elevation:",
+            content: elevationDistance,
+            suffix: "m"
+        },
+        {
+            text: "Distance of decent:",
+            content: decentDistance,
+            suffix: "m"
+        },
+        {
+            text: "Start point:",
+            content: startPoint
+        },
+        {
+            text: "Goal point:",
+            content: goalPoint
+        },
+    ]
+
     return (
-        <div className={style.main_information}>
+        <div className={style.information_panel}>
             <div className={style.title}>
-                {routeName}
+                The situation in recent
             </div>
             <div className={style.content}>
                 <div className={style.textual_information}>
-                    <div className={style.info_item}>
-                        Mountain:
-                        <div className={style.value}>
-                            {mountainName}
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Month recommended:
-                        <div className={style.value}>
-                            {monthRecommended}
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Route type:
-                        <div className={style.value}>
-                            {routeType}
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Altitude zone:
-                        <div className={style.value}>
-                            {altitudeZone}
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Difference in elevation:
-                        <div className={style.value}>
-                            {elevationDifference}
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Maximum altitude:
-                        <div className={style.value}>
-                            {maxAltitude}m
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Minimum altitude:
-                        <div className={style.value}>
-                            {minAltitude}m
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Total distance:
-                        <div className={style.value}>
-                            {totalDistance}m
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Distance of elevation:
-                        <div className={style.value}>
-                            {elevationDistance}m
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Distance of decent:
-                        <div className={style.value}>
-                            {decentDistance}m
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Start point:
-                        <div className={style.value}>
-                            {startPoint}
-                        </div>
-                    </div>
-                    <div className={style.info_item}>
-                        Goal point:
-                        <div className={style.value}>
-                            {goalPoint}
-                        </div>
-                    </div>
+                    {
+                        items.map(({ text, content, suffix }, index: number) => {
+                            return (
+                                <div className={style.info_item} key={index}>
+                                    {text}
+                                    <div className={style.value}>
+                                        {content}
+                                    </div>
+                                    {suffix}
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <div className={style.graphical_information}>
-                    {map}
-                    {elevationChart}
+                    <div className={style.map}>
+                        {map}
+                    </div>
+                    <div className={style.elevation_chart}>
+                        {elevationChart}
+                    </div>
                 </div>
             </div>
         </div>

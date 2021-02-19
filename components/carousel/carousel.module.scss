@@ -1,0 +1,132 @@
+@import "/styles/theme.scss";
+
+$main_width: 42%;
+$main_height: 95%;
+$half_width: 25%;
+$half_height: 50%;
+$out_width: 15%;
+$out_height: 30%;
+$transition: left 1s ease-in-out, width 1s ease-in-out, height 1s ease-in-out,
+  opacity 1s ease-in-out;
+
+
+.carousel {
+  position: relative;
+
+  display: flex;
+
+  width: 100%;
+}
+
+.wrapper {
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.image_container {
+  position: absolute;
+
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  transition: $transition;
+
+  cursor: pointer;
+
+  &:hover .icon {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.image {
+  object-fit: cover;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+
+  background-color: $theme_main_color;
+  border-radius: 20%;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+
+  transition: transform 0.2s ease-out;
+}
+
+.inactive_image {
+  visibility: hidden;
+}
+
+.active_image {
+  opacity: 1;
+  left: 50%;
+
+  width: $main_width;
+  height: $main_height;
+
+  z-index: 3;
+}
+
+.side_image_left {
+  opacity: 1;
+  left: 15%;
+
+  width: $half_width;
+  height: $half_height;
+
+  z-index: 2;
+}
+
+.side_image_right {
+  opacity: 1;
+  left: 85%;
+
+  width: $half_width;
+  height: $half_height;
+
+  z-index: 1;
+}
+
+.outside_side_image_left {
+  opacity: 0;
+  left: -20%;
+
+  width: $out_width;
+  height: $out_height;
+
+  z-index: 1;
+}
+
+.outside_side_image_right {
+  opacity: 0;
+  left: 120%;
+
+  width: $out_width;
+  height: $out_height;
+
+  z-index: 1;
+}
+
+.back_image {
+  opacity: 0;
+  left: 50%;
+
+  width: $out_width;
+  height: $out_height;
+}
+
+

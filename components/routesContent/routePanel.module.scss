@@ -1,0 +1,33 @@
+@import "/styles/theme.scss";
+
+.route_panel {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+
+  //border-left: 3px solid $theme_secondary_color;
+
+  background-color: $theme_main_color;
+
+  .title {
+    font-size: $title_text_size;
+    text-indent: 2rem;
+
+    padding: 10px;
+
+    color: $theme_text_secondary_color;
+    background-color: $theme_secondary_color;
+  }
+
+  .content {
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .secondary_information {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}

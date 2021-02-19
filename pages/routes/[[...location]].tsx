@@ -1,15 +1,15 @@
 import Head from 'next/head'
+import Link from "next/link";
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+
 import * as db from '../../database'
 
-import Link from "next/link";
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { LocationSearchingOutlined } from '@material-ui/icons';
-
-
-import { Layout, TopBanner } from '../../components';
-import { FakeItinerary } from '../../FakeContent/FakeItinerary';
+import {
+    Layout,
+    TopBanner,
+    RoutePanel,
+    RouteNavigationPanel
+} from '../../components';
 import style from "./[id].module.scss";
 
 function makeLinkfrom(tab: string[]): string {
@@ -20,143 +20,92 @@ function makeLinkfrom(tab: string[]): string {
     return res;
 }
 
-function RoutePage(routeData: db.types.RouteWithAllData, areaData) {
-    let path = "";
+function RoutePage({
+    id,
+    name,
+    mountainName,
+    description,
+    elevationDifference,
+    maxAltitude,
+    minAltitude,
+    totalDistance,
+    elevationDistance,
+    decentDistance,
+    recomendedMonth,
+    picturesPath,
+    routePoints,
+    locationId,
+    routeTypeId,
+    altitudeZoneId,
+    startPointTypeId,
+    endPointTypeId,
+    mapId,
+    barChartId,
+    routeType,
+    altitudeZone,
+    startPointType,
+    endPointType,
+    location,
+    map
+}, currentPath: string[], areaData) {
 
     return (
         <Layout>
             <Head>
-                <title>{FakeItinerary.title.name}</title>
+                <title>{name}</title>
             </Head>
             <TopBanner />
             <div className={style.route_container}>
-                <pre>{JSON.stringify(routeData)}</pre>
-                <div className={style.navigation}>
-                    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                        {FakeItinerary.title.categories.map((category, index) => {
-
-                            path += category + "/";
-
-                            return (
-                                <div key={index}>
-                                    <Link href={path}>
-                                        {category}
-                                    </Link>
-                                </div>
-                            );
-                        })}
-                    </Breadcrumbs>
-                </div>
-                <div className={style.route_core}>
-                    <div className={style.main_information}>
-                        <div className={style.title}>
-                            {routeData.routeName}
-                        </div>
-                        <div className={style.content}>
-                            <div className={style.textual_information}>
-                                <div className={style.info_item}>
-                                    Mountain:
-                                    <div className={style.value}>
-                                        {routeData.mountain.name}
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Month recommended:
-                                    <div className={style.value}>
-
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Route type:
-                                    <div className={style.value}>
-                                        {routeData.routeType.name}
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Altitude zone:
-                                    <div className={style.value}>
-
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Difference in elevation:
-                                    <div className={style.value}>
-
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Maximum altitude:
-                                    <div className={style.value}>
-                                        {routeData.maxAltitude}m
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Minimum altitude:
-                                    <div className={style.value}>
-                                        {routeData.minAltitude}m
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Total distance:
-                                    <div className={style.value}>
-                                        {routeData.totalDistance}m
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Distance of elevation:
-                                    <div className={style.value}>
-                                        {routeData.elevationDistance}m
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Distance of decent:
-                                    <div className={style.value}>
-                                        {routeData.decentDistance}m
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Start point:
-                                    <div className={style.value}>
-                                        {routeData.startPointType.name}
-                                    </div>
-                                </div>
-                                <div className={style.info_item}>
-                                    Goal point:
-                                    <div className={style.value}>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={style.graphical_information}>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div className={style.other_information}>
-                        <div className={style.route_information}>
-                            <div className={style.title}>
-                                Route Information
-                            </div>
-                            <div className={style.info_item}>
-                                {routeData.routeDescription}
-                            </div>
-                        </div>
-                        <div className={style.area_information}>
-                            <div className={style.title}>
-                                Area Information
-                            </div>
-                            <div className={style.info_item}>
-                                Nothing Yet
-                            </div>
-                        </div>
-                    </div>
-                    <div className={style.recent_information}>
-
-                    </div>
-                </div>
+                <RouteNavigationPanel path={currentPath} />
+                <RoutePanel routeName={name}
+                    mountainName={mountainName}
+                    recommendedMonth={recomendedMonth.map((month) => numberToMonth(month)).join(', ')}
+                    routeType={routeType.name}
+                    altitudeZone={altitudeZone.name}
+                    elevationDifference={elevationDifference}
+                    maxAltitude={maxAltitude}
+                    minAltitude={minAltitude}
+                    totalDistance={totalDistance}
+                    elevationDistance={elevationDistance}
+                    decentDistance={decentDistance}
+                    startPoint={startPointType.name}
+                    goalPoint={endPointType.name}
+                    map={mapId}
+                    elevationChart={barChartId}
+                    description={description}
+                />
             </div>
         </Layout>
     )
+}
+
+RoutePage.defaultProps = {
+    id: 0,
+    name: "No data provided",
+    mountainName: "No data provided",
+    description: "No description found.",
+    elevationDifference: "No data provided",
+    maxAltitude: "No data provided",
+    minAltitude: "No data provided",
+    totalDistance: "No data provided",
+    elevationDistance: "No data provided",
+    decentDistance: "No data provided",
+    recomendedMonth: "No data provided",
+    picturesPath: "No data provided",
+    routePoints: "No data provided",
+    locationId: 0,
+    routeTypeId: 0,
+    altitudeZoneId: 0,
+    startPointTypeId: 0,
+    endPointTypeId: 0,
+    mapId: 0,
+    barChartId: 0,
+    routeType: null,
+    altitudeZone: null,
+    startPointType: null,
+    endPointType: null,
+    location: null,
+    map: null
 }
 
 function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.types.BasicPageData[]) {
@@ -194,13 +143,13 @@ function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.type
     );
 }
 
-export default function Location({ subLocations, subRoutes, routeData }) {
+export default function Location({ subLocations, subRoutes, routeData, currentPath }) {
     //subLocations : db.types.BasicPageData[]
     //subRoutes : db.types.BasicPageData[]
     //routeData : not yet properly defined
 
     if (routeData != null) {
-        return RoutePage(routeData)
+        return RoutePage(routeData, currentPath, null)
     } else {
         return LocationPage(subLocations, subRoutes);
     }
@@ -251,7 +200,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
         return {
             props: {
-                routeData
+                routeData,
+                currentPath,
             },
             //revalidate: 60, //regenerate the page every 60 seconds
         };
@@ -280,4 +230,36 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: parameters,
         fallback: true,
     };
+}
+
+
+function numberToMonth(month: number) {
+    switch (month) {
+        case 1:
+            return "January";
+        case 2:
+            return "February";
+        case 3:
+            return "Mars";
+        case 4:
+            return "April";
+        case 5:
+            return "May";
+        case 6:
+            return "June";
+        case 7:
+            return "July";
+        case 8:
+            return "August";
+        case 9:
+            return "September";
+        case 10:
+            return "October";
+        case 11:
+            return "November";
+        case 12:
+            return "December";
+        default:
+            return "Unknown";
+    }
 }

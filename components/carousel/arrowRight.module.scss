@@ -1,0 +1,25 @@
+@import "/styles/theme.scss";
+
+.arrow_right {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 5;
+
+  cursor: pointer;
+
+  border-radius: 50%;
+  background-color: $theme_secondary_color;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  transition: 0.3s;
+
+  &:hover {
+    background-color: $theme_alternative_color;
+  }
+}
