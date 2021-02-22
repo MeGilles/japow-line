@@ -1,17 +1,18 @@
-import { Layout } from '../components'
 import React, { MutableRefObject, useRef } from 'react';
 import Head from 'next/head';
+import { GetStaticProps } from 'next';
 
+import { Layout } from '../components'
 import * as parallax from '../components/parallax/parallax';
+import { getTopBarMenu } from '../lib/menu';
 
-
-export default function Home() {
+export default function Index({menuItems}) {
   const element1 = useRef(null);
   const element2 = useRef(null);
   const element3 = useRef(null);
 
   return (
-    <Layout>
+    <Layout menuItems={menuItems}>
       <Head>
         <title>JapowLine</title>
       </Head>
@@ -98,3 +99,10 @@ const createThirdContent = () => {
   );
 }
 
+export const getStaticProps: GetStaticProps = async (context) => {
+  return ({
+    props : {
+      menuItems : await getTopBarMenu()
+    }
+  })
+}

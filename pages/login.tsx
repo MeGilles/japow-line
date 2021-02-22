@@ -6,11 +6,12 @@ import Head from 'next/head';
 
 import style from './login.module.scss';
 import { Layout, InputTextField, InputCheckbox, ClassicButton, LineButton } from '../components';
+import { getTopBarMenu } from '../lib/menu';
 
 const acceptedProviders = ['google', 'line', 'github', 'email']
 
 
-export default function login({ providers }) {
+export default function Login({ providers, menuItems }) {
 
   const [rememberMe, setRememberMe] = useState(false),
     [email, setEmail] = useState(""),
@@ -62,12 +63,12 @@ export default function login({ providers }) {
 
     if (isValid) {
       // if (rememberMe) { signIn(); } else { signIn(); } //TODO
-      signIn(providers.credentials.id, {email, password});
+      signIn(providers.credentials.id, { email, password });
     }
   }
 
   return (
-    <Layout>
+    <Layout menuItems={menuItems}>
       <Head>
         <title>Login</title>
       </Head>
@@ -125,7 +126,8 @@ export default function login({ providers }) {
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
-      providers: await providers()
+      providers: await providers(),
+      menuItems: await getTopBarMenu()
     }
   }
 }

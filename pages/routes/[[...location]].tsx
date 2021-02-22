@@ -11,6 +11,7 @@ import { LocationSearchingOutlined } from '@material-ui/icons';
 import { Layout, TopBanner } from '../../components';
 import { FakeItinerary } from '../../FakeContent/FakeItinerary';
 import style from "./[id].module.scss";
+import { getTopBarMenu } from '../../lib/menu';
 
 function makeLinkfrom(tab: string[]): string {
     let res = "";
@@ -20,11 +21,11 @@ function makeLinkfrom(tab: string[]): string {
     return res;
 }
 
-function RoutePage(routeData: db.types.RouteWithAllData, areaData) {
+function RoutePage(routeData: db.types.RouteWithAllData, areaData, menuItems) {
     let path = "";
 
     return (
-        <Layout>
+        <Layout menuItems={menuItems}>
             <Head>
                 <title>{FakeItinerary.title.name}</title>
             </Head>
@@ -159,7 +160,7 @@ function RoutePage(routeData: db.types.RouteWithAllData, areaData) {
     )
 }
 
-function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.types.BasicPageData[]) {
+function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.types.BasicPageData[], menuItems) {
     let routesLinks = [];
     const routesArray: db.types.BasicPageData[] = subLocations;
 
@@ -177,7 +178,7 @@ function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.type
     }
 
     return (
-        <Layout>
+        <Layout menuItems={menuItems}>
             <div className="default_centered_div">
                 Routes in this location !
                 <ul>
@@ -194,15 +195,15 @@ function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.type
     );
 }
 
-export default function Location({ subLocations, subRoutes, routeData }) {
+export default function Location({ subLocations, subRoutes, routeData, menuItems }) {
     //subLocations : db.types.BasicPageData[]
     //subRoutes : db.types.BasicPageData[]
     //routeData : not yet properly defined
 
     if (routeData != null) {
-        return RoutePage(routeData)
+        return RoutePage(routeData, null, menuItems)
     } else {
-        return LocationPage(subLocations, subRoutes);
+        return LocationPage(subLocations, subRoutes, menuItems);
     }
 }
 
@@ -231,18 +232,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
             subRoutes = await db.route.getLocationRoutes(currentPath[currentPath.length - 1]);
         }
 
-        subLocations.forEach((element) => {
-            element.path = currentPath.concat(element.name);
-        })
-
-        subRoutes.forEach((element) => {
-            element.path = currentPath.concat(element.name);
-        })
-
         return {
             props: {
                 subLocations,
                 subRoutes,
+                menuItems : await getTopBarMenu(),
             },
             //revalidate: 60, //regenerate the page every 60 seconds
         };
@@ -251,7 +245,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
         return {
             props: {
-                routeData
+                routeData,
+                menuItems : await getTopBarMenu(),
             },
             //revalidate: 60, //regenerate the page every 60 seconds
         };
