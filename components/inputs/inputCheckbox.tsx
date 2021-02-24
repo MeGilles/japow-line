@@ -1,9 +1,5 @@
-
-import { ThemeProvider } from '@material-ui/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-import theme from "../../styles/materialTheme";
 
 type Props = {
   state: boolean;
@@ -13,19 +9,17 @@ type Props = {
 export default function InputCheckbox({ state, onChange }: Props) {
 
   return (
-    <ThemeProvider theme={theme}>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={state}
-            onChange={onChange}
-            name="checkBox"
-            color="secondary"
-          />
-        }
-        label="Remember me"
-      />
-    </ThemeProvider>
+    <FormControlLabel
+      control={
+        <Checkbox
+          checked={state}
+          onChange={onChange}
+          name="checkBox"
+          color="secondary"
+        />
+      }
+      label="Remember me"
+    />
   );
 }
 

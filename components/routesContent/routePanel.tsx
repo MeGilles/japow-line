@@ -5,7 +5,8 @@ import {
     RoutePhotosPanel,
     RouteDescriptionPanel,
     RouteAreaPanel,
-    RouteNewsPanel
+    RouteNewsPanel,
+    RouteCommentsPanel
 } from '../';
 
 type Props = {
@@ -47,7 +48,7 @@ export default function RoutePanel({
 }: Props) {
 
     return (
-        <div className={style.route_panel}>
+        <section className={style.route_panel}>
             <div className={style.title}>
                 {routeName}
             </div>
@@ -74,8 +75,15 @@ export default function RoutePanel({
                     <RouteAreaPanel />
                 </div>
                 <RouteNewsPanel />
+                <RouteCommentsPanel />
             </div >
-        </div >
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </section>
     );
 }
 

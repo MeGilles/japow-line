@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { ThemeProvider } from '@material-ui/styles';
 import SettingsOverscanIcon from '@material-ui/icons/SettingsOverscan';
 
-
-import theme from "../../styles/materialTheme";
 import style from './carousel.module.scss';
 import FullScreenSlider from './fullScreenSlider';
 import ArrowLeft from './arrowRight';
@@ -24,7 +21,7 @@ export default function Carousel({ images, height }: Props) {
         [fullscreenImage, setFullscreenImage] = useState(0);
 
 
-    if (!Array.isArray(images) || images.length <= 0 || length > 30) {
+    if (!Array.isArray(images) || images.length <= 0) {
         return null;
     }
 
@@ -111,9 +108,7 @@ export default function Carousel({ images, height }: Props) {
                             <div className={getClass(index)} key={index} onClick={() => displayFullSize(index)}>
                                 <Image className={style.image} src={image.src} alt={"image-" + currentImage} layout="fill" />
                                 <div className={style.icon}>
-                                    <ThemeProvider theme={theme}>
-                                        <SettingsOverscanIcon fontSize="large" color="secondary" />
-                                    </ThemeProvider>
+                                    <SettingsOverscanIcon fontSize="large" color="secondary" />
                                 </div>
                             </div>
                         )
@@ -121,14 +116,14 @@ export default function Carousel({ images, height }: Props) {
                 }
             </div>
             {
-                shouldDisplayFullscreen &&
-                <FullScreenSlider 
+                <FullScreenSlider
+                    shouldOpen={shouldDisplayFullscreen}
                     images={images}
-                    currentImage={fullscreenImage}
-                    nextImageFunc={nextImage}
-                    prevImageFunc={prevImage}
-                    closeFunc={hideFullSize}
-                    goToImageFunc={goToImage}
+                    SyncCurrentImage={fullscreenImage}
+                    SyncNextImageFunc={nextImage}
+                    SyncPrevImageFunc={prevImage}
+                    SyncCloseFunc={hideFullSize}
+                    SyncGoToImageFunc={goToImage}
                 />
             }
         </div>

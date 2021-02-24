@@ -1,0 +1,31 @@
+@import "/styles/theme.scss";
+
+.answer_button {
+  max-width: 33%;
+  min-width: 10%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 3px;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition: 0.1s ease-in-out;
+
+  .icon {
+    position: relative;
+  }
+
+  .label {
+    padding: 5px;
+  }
+}

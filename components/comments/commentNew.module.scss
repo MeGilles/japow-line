@@ -1,0 +1,36 @@
+@import "/styles/theme.scss";
+
+.my_answer {
+    display: flex;
+    flex-direction: row;
+
+    align-items: flex-start;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    border-top: 1px solid $theme_border_grey;
+
+    .avatar {
+        width: 3%;
+
+        min-width: 40px;
+
+        margin-right: 10px;
+    }
+
+    .input_field {
+        width: 89%;
+    }
+
+    .validation_button {
+        width: 7%;
+        height: 40px;
+
+        min-width: 70px;
+
+        margin-left: 10px;
+    }
+}

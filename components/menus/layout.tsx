@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Head from 'next/head';
+import { ThemeProvider } from '@material-ui/styles';
 
+import theme from "../../styles/materialTheme";
 import style from "./layout.module.scss";
 import TopBar from "./topBar";
 
@@ -60,13 +62,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <> 
+    <ThemeProvider theme={theme}> 
     <Head>
     </Head>
       <header className={layoutClasses.join(" ")} onMouseEnter={hover} onMouseLeave={unHover} >
         <TopBar />
       </header>
       {children}
-    </>
+    </ThemeProvider>
   );
 }

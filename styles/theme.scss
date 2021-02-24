@@ -12,8 +12,12 @@ $menu_text_size: 1.5rem;
 $theme_main_color: white;
 $theme_secondary_color: #26a6e5;
 $theme_alternative_color: #29515f;
+$theme_background_color: rgba(38, 166, 229, 0.1);
 $theme_dark_highlight_color: #F5F5F5;
-$theme_transparent_dark: rgba(0, 0, 0, 0.9);
+$theme_transparent_dark: rgba(0, 0, 0, 0.95);
+
+$theme_success_color: #8bc34a;
+$theme_error_color: #e53935;
 
 $theme_text_main_color: #1e1e1e;
 $theme_text_secondary_color: white;
@@ -22,6 +26,13 @@ $theme_text_grey_color: darkgrey;
 $theme_text_error_color: #D8000C;
 
 $link_color: #0000ee;
+
+$theme_border_grey: rgb(226, 226, 226);
+
+$material_like_color: #f44336;
+$material_comment_color: #8bc34a;
+$material_share_color: #03a9f4;
+$material_report_color: #e64a19;
 
 
 //Providers

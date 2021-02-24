@@ -1,7 +1,5 @@
 import { useRef, useEffect } from "react";
 
-import styles from "./outsideClickWrapper.module.scss"
-
 const callOnOutsideClick = (ref, func) => {
   useEffect(() => {
     function handleClickOutside(event) {
@@ -21,5 +19,5 @@ export default function OutsideClickWrapper(props) {
   const wrapperRef = useRef(null);
   callOnOutsideClick(wrapperRef, props.func);
 
-  return <div ref={wrapperRef} className={styles.wrapper} >{props.children}</div>;
+  return <div ref={wrapperRef}>{props.children}</div>;
 }

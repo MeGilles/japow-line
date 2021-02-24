@@ -1,0 +1,23 @@
+@import "/styles/theme.scss";
+
+.comment_answer_header {
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+
+  .avatar {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .textual_data {
+    .name {
+      font-weight: bold;
+      padding-bottom: 1px;
+    }
+    .role {
+      color: darkgrey;
+    }
+  }
+}

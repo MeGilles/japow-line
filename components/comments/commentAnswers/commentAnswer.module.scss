@@ -1,0 +1,43 @@
+@import "/styles/theme.scss";
+
+.comment_answer {
+  padding-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  .content {
+    margin-left: 5px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: row;
+
+    .left_buttons {
+      float: left;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+
+      width: 50%;
+    }
+
+    .right_buttons {
+      float: right;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: right;
+
+      width: 50%;
+    }
+  }
+
+  .separating_line {
+    width: 100%;
+    height: 1px;
+
+    background-color: $theme_border_grey;
+  }
+}

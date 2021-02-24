@@ -1,0 +1,41 @@
+@import "/styles/theme.scss";
+
+.comments_panel {
+  margin-top: 2rem;
+
+  .title {
+    font-size: $subtitle_text_size;
+    text-indent: 2rem;
+
+    padding: 5px;
+
+    color: $theme_text_secondary_color;
+    background-color: $theme_secondary_color;
+  }
+
+  .content {
+    width: 95%;
+
+    margin-top: 2rem;
+    margin-left: 2.5%;
+  }
+
+  .empty {
+    font-size: $subtitle_text_size;
+    text-align: center;
+  }
+
+  .new_comment {
+    position: fixed;
+    z-index: 99;
+
+    bottom: 0;
+    left: 0;  
+
+    width: 100%;
+
+    transition: 0.4s ease-in-out;
+
+    background-color: $theme_main_color;
+  }
+}

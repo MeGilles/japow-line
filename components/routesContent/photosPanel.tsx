@@ -23,19 +23,4 @@ const fakeImages = [
     {
         src: '/images/login_bg.jpg'
     },
-    {
-        src: '/images/one_man_walking.jpg'
-    },
-    {
-        src: '/images/one_man_walking_large_landscape.jpg'
-    },
-    {
-        src: '/images/one_man_standing.jpg'
-    },
-    {
-        src: '/images/login_bg.jpg'
-    },
-    {
-        src: '/images/one_man_walking.jpg'
-    },
 ]

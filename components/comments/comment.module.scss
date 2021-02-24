@@ -1,0 +1,25 @@
+@import "/styles/theme.scss";
+
+.comment {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  border: 1px solid $theme_border_grey; 
+
+  .main_comment {
+    background-color: $theme_main_color;
+
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    border-bottom: 1px solid $theme_border_grey;
+
+    .content {
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-bottom: 20px;
+    }
+  }
+}

@@ -14,7 +14,7 @@ import style from "./[id].module.scss";
 
 function makeLinkfrom(tab: string[]): string {
     let res = "";
-    for (let i = 0; i < tab.length; i++) {
+    for (let i = 0; i < (tab ? tab.length : 0); i++) {
         res += "/" + tab[i];
     }
     return res;
@@ -59,17 +59,17 @@ function RoutePage({
                 <RouteNavigationPanel path={currentPath} />
                 <RoutePanel routeName={name}
                     mountainName={mountainName}
-                    recommendedMonth={recomendedMonth.map((month) => numberToMonth(month)).join(', ')}
-                    routeType={routeType.name}
-                    altitudeZone={altitudeZone.name}
+                    recommendedMonth={recomendedMonth && recomendedMonth.map((month) => numberToMonth(month)).join(', ')}
+                    routeType={routeType && routeType.name}
+                    altitudeZone={altitudeZone && altitudeZone.name}
                     elevationDifference={elevationDifference}
                     maxAltitude={maxAltitude}
                     minAltitude={minAltitude}
                     totalDistance={totalDistance}
                     elevationDistance={elevationDistance}
                     decentDistance={decentDistance}
-                    startPoint={startPointType.name}
-                    goalPoint={endPointType.name}
+                    startPoint={startPointType && startPointType.name}
+                    goalPoint={endPointType && endPointType.name}
                     map={mapId}
                     elevationChart={barChartId}
                     description={description}
@@ -115,12 +115,12 @@ function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.type
     let locationLinks = [];
     const locationsArray: db.types.BasicPageData[] = subRoutes;
 
-    for (let i = 0; i < routesArray.length; i++) {
+    for (let i = 0; i < (routesArray ? routesArray.length : 0); i++) {
         let currentPath = "/routes" + makeLinkfrom(routesArray[i].path);
         routesLinks.push(<li><a href={currentPath}>{routesArray[i].name}</a></li>);
     }
 
-    for (let i = 0; i < locationsArray.length; i++) {
+    for (let i = 0; i < (locationsArray ? locationsArray.length : 0); i++) {
         let currentPath = "/routes" + makeLinkfrom(locationsArray[i].path);
         locationLinks.push(<li><a href={currentPath}>{locationsArray[i].name}</a></li>);
     }
@@ -157,7 +157,7 @@ export default function Location({ subLocations, subRoutes, routeData, currentPa
 
 export const getStaticProps: GetStaticProps = async (context) => {
     //const locale = context.locale; //not used for the moment
-    let currentPath: string[]
+    let currentPath: string[];
     switch (typeof context.params.location) {
         case 'string':
             return { notFound: true };
@@ -168,7 +168,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             currentPath = []
     }
 
-    if (currentPath.length == 0 || (await db.route.isLocation(currentPath[currentPath.length - 1]))) {
+    if (currentPath && currentPath.length == 0 || (await db.route.isLocation(currentPath && currentPath[currentPath.length - 1]))) {
         let subLocations: db.types.BasicPageData[]
         let subRoutes: db.types.BasicPageData[]
 
@@ -196,7 +196,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             //revalidate: 60, //regenerate the page every 60 seconds
         };
     } else {
-        const routeData = await db.route.getRoute(currentPath[currentPath.length - 1]);
+        const routeData = await db.route.getRoute(currentPath && currentPath[currentPath.length - 1]);
 
         return {
             props: {
@@ -216,11 +216,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     let parameters = [];
 
-    for (let i = 0; i < routes.length; i++) {
+    for (let i = 0; i < (routes ? routes.length : 0); i++) {
         parameters.push({ params: { location: routes[i] } });
     }
 
-    for (let i = 0; i < locations.length; i++) {
+    for (let i = 0; i < (locations ? locations.length : 0); i++) {
         parameters.push({ params: { location: locations[i] } });
     }
 
