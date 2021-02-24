@@ -4,14 +4,17 @@ import { useRouter } from 'next/router'
 
 import styles from "./menu.module.scss";
 import MenuButton from "./menuButton";
-import * as FakeMenu from '../../FakeContent/FakeMenu';
 
 type Props = {
   name: string;
   redirection: string;
-  subsections: FakeMenu.fakeMenu[];
+  subsections: {
+    name : string;
+    redirection : string;
+  }[];
   size?: any;
 }
+
 export default function Menu(props: Props) {
 
   const [open, setOpen] = useState(false);

@@ -1,4 +1,4 @@
-import { prisma, types } from '../';
+import { prisma, types } from '..';
 import { BasicPageData } from './types';
 
 /**
@@ -70,12 +70,11 @@ export async function getAllLocationsPaths(): Promise<string[][]> {
 }
 
 /**
- * Returns all the sublocations for the given location name, if the name is "" the root locations will be returned
- * /!\ this function does not populate the BasicPageData.path
+ * Returns all the sublocations for the given location name, if the name is null the root locations will be returned
  */
 export async function getSubLocations(name: string): Promise<types.BasicPageData[]> {
     let locId;
-    if (typeof name == 'undefined') {
+    if (name == null) {
         locId = null;
     } else {
         locId = (await prisma.location.findUnique({
@@ -98,21 +97,22 @@ export async function getSubLocations(name: string): Promise<types.BasicPageData
         }
     }));
 
+    let pathToHere = getFullPathFromName(name);
+
     let locations: BasicPageData[] = [];
     for (let i = 0; i < subLocations.length; i++) {
         const element = subLocations[i];
-        locations.push({ name: element.name, name_jp: element.name_jp, path: [] });
+        locations.push({ name: element.name, name_jp: element.name_jp, path: (await pathToHere).concat(element.name) });
     }
     return locations;
 }
 
 /**
  * Returns all the routes in the given location name
- *  * /!\ this function does not populate the BasicPageData.path
  */
 export async function getLocationRoutes(name: string): Promise<types.BasicPageData[]> {
     let locId;
-    if (typeof name == 'undefined') {
+    if (name == null) {
         locId = null;
     } else {
         locId = (await prisma.location.findUnique({
@@ -135,10 +135,12 @@ export async function getLocationRoutes(name: string): Promise<types.BasicPageDa
         }
     }));
 
+    let pathToHere = getFullPathFromName(name);
+
     let routes: BasicPageData[] = [];
     for (let i = 0; i < subRoutes.length; i++) {
         const element = subRoutes[i];
-        routes.push({ name: element.name, name_jp: element.name_jp, path: [] });
+        routes.push({ name: element.name, name_jp: element.name_jp, path: (await pathToHere).concat(element.name) });
     }
     return routes;
 }
@@ -173,9 +175,13 @@ async function getCompletePathFromLocationId(location_id: number): Promise<strin
 
 /**
  * returns the full path of a location or route with the given name
- * @param routeName 
+ * if the name is null then [] is returned
+ * @param route 
  */
 export async function getFullPathFromName(name: string): Promise<string[]> {
+    if (name == null){
+        return [];
+    }
     let fatherLocationId: number;
     try {
         fatherLocationId = (await prisma.route.findUnique({
@@ -209,6 +215,10 @@ export async function getFullPathFromName(name: string): Promise<string[]> {
     return [name];
 }
 
+/**
+ * Returns true if the name provided is a location.
+ * @param name 
+ */
 export function isLocation(name: string): Promise<Boolean> {
     return prisma.location.findFirst({
         where: {

@@ -6,22 +6,34 @@ import { useSession } from 'next-auth/client';
 import frontData from "../../public/configs/frontData";
 
 import style from "./topBar.module.scss";
-import * as FakeMenu from "../../FakeContent/FakeMenu";
+import { MenuContent } from "../../lib/menu";
 import Menu from "./menu";
 import MenuButton from "./menuButton";
 import LoginButton from "./loginButton";
 import ElasticGlue from "../utils/elasticGlue";
 
-var buttonsNbr: number = FakeMenu.FakeMenu.length;
-var buttonsPartSizePercent: number = frontData.menuButtonsTotalMaxWidth.value;
-
-var buttonSizePercent: number = buttonsNbr < 5 ? 15 : buttonsPartSizePercent / buttonsNbr;
-var buttonSize: string = buttonSizePercent + frontData.menuButtonsTotalMaxWidth.unit;
-
 const leftGlueSize = '20%';
 const rightGlueSize = '15%';
 
-export default function TopBar() {
+type Props = {
+  menuItems: {
+    name: string;
+    redirection: string;
+    subsections: {
+      name: string;
+      redirection: string;
+    }[];
+    size?: any;
+  }[];
+}
+
+export default function TopBar(props: Props) {
+
+  var buttonsNbr: number = props.menuItems.length;
+  var buttonsPartSizePercent: number = frontData.menuButtonsTotalMaxWidth.value;
+
+  var buttonSizePercent: number = buttonsNbr < 5 ? 15 : buttonsPartSizePercent / buttonsNbr;
+  var buttonSize: string = buttonSizePercent + frontData.menuButtonsTotalMaxWidth.unit;
 
   const [session, loading] = useSession();
 
@@ -33,7 +45,7 @@ export default function TopBar() {
 
       <ElasticGlue width={leftGlueSize} />
 
-      {FakeMenu.FakeMenu.map((menuSection: FakeMenu.fakeMenu, index: number) => {
+      {props.menuItems.map((menuSection: MenuContent, index: number) => {
         return menuSection.subsections ? (
           <Menu
             name={menuSection.name}
@@ -43,8 +55,8 @@ export default function TopBar() {
             key={index}
           />
         ) : (
-          <MenuButton name={menuSection.name} size={buttonSize} click={() => router.push(menuSection.redirection)} key={index} />
-        );
+            <MenuButton name={menuSection.name} size={buttonSize} click={() => router.push(menuSection.redirection)} key={index} />
+          );
       })}
 
       <ElasticGlue width={rightGlueSize} />
@@ -60,3 +72,15 @@ export default function TopBar() {
     </div>
   );
 }
+
+TopBar.defaultProps = {
+  menuItems: [
+    {
+      name: "The menu content was not passed to the topBar",
+      redirection: "/",
+      subsections: [],
+      size:"auto",
+    }
+  ],
+}
+

@@ -1,6 +1,8 @@
 import { Prisma } from '@prisma/client'
 
-// Define a type that includes the relation to `Post`
+/**
+ * Defines the type of data fetched to be displayed on route page
+ */
 export type RouteWithAllData = Prisma.RouteGetPayload<{
     include: {
         mountain: true,
@@ -17,13 +19,12 @@ export type RouteWithAllData = Prisma.RouteGetPayload<{
     }
 }>
 
+/**
+ * Define the type for the route and location.
+ * It is mostly used in route/[[...location]]
+ */
 export type BasicPageData = {
     name : string,
     name_jp : string,
     path : string[],
 }
-
-// Define a type that only contains a subset of the scalar fields
-type UserPersonalData = Prisma.UserGetPayload<{
-    select: { email: true; name: true }
-}>

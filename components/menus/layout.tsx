@@ -8,7 +8,7 @@ import TopBar from "./topBar";
 
 export const siteTitle = "Next.js Sample Website";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children, menuItems }: { children: React.ReactNode, menuItems: any }) {
 
   const [prevScroll, setPrevScroll] = useState(0),
     [scrollingDown, setScrollingDown] = useState(false),
@@ -66,7 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Head>
     </Head>
       <header className={layoutClasses.join(" ")} onMouseEnter={hover} onMouseLeave={unHover} >
-        <TopBar />
+        <TopBar menuItems={menuItems} />
       </header>
       {children}
     </ThemeProvider>
