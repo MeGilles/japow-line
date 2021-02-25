@@ -36,6 +36,8 @@ a {
   color: $theme_secondary_color;
   display: inline-block;
 
+  cursor: pointer;
+
   &:after {
     content: "";
     display: block;
@@ -48,6 +50,13 @@ a {
   &:hover {
     &:after {
       width: 100%;
+    }
+  }
+
+  &:active {
+    color: $theme_alternative_color;
+    &:after {
+      background-color: $theme_alternative_color;
     }
   }
 }

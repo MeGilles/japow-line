@@ -6,7 +6,8 @@ import {
     Layout,
     TopBanner,
     RoutePanel,
-    RouteNavigationPanel
+    RouteNavigationPanel,
+    RoutesLinks,
 } from '../../components';
 import style from "./[id].module.scss";
 import { getTopBarMenu } from '../../lib/menu';
@@ -107,13 +108,16 @@ RoutePage.defaultProps = {
     map: null
 }
 
-function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.types.BasicPageData[], menuItems) {
+function LocationPage(currentPath, subLocations: db.types.BasicPageData[], subRoutes: db.types.BasicPageData[], menuItems) {
 
     let routesLinks = [];
     const routesArray: db.types.BasicPageData[] = subLocations;
 
     let locationLinks = [];
     const locationsArray: db.types.BasicPageData[] = subRoutes;
+
+
+    /*
 
     for (let i = 0; i < (routesArray ? routesArray.length : 0); i++) {
         let currentPath = "/routes" + makeLinkfrom(routesArray[i].path);
@@ -125,20 +129,14 @@ function LocationPage(subLocations: db.types.BasicPageData[], subRoutes: db.type
         locationLinks.push(<li><a href={currentPath}>{locationsArray[i].name}</a></li>);
     }
 
+    */
+
     return (
         <Layout menuItems={menuItems}>
-            <div className="default_centered_div">
-                Routes in this location !
-                <ul>
-                    {routesLinks}
-                </ul>
-            </div>
-            <div className="default_centered_div">
-                Sublocations !
-                <ul>
-                    {locationLinks}
-                </ul>
-            </div>
+            <Head>
+                <title>Find Route</title>
+            </Head>
+            <RoutesLinks currentPath={currentPath} routes={locationsArray} locations={routesArray} />
         </Layout>
     );
 }
@@ -151,7 +149,7 @@ export default function Location({ subLocations, subRoutes, routeData, menuItems
     if (routeData != null) {
         return RoutePage(routeData, currentPath, null, menuItems)
     } else {
-        return LocationPage(subLocations, subRoutes, menuItems);
+        return LocationPage(currentPath, subLocations, subRoutes, menuItems);
     }
 }
 
@@ -185,7 +183,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 subLocations,
                 subRoutes,
                 currentPath,
-                menuItems : await getTopBarMenu(),
+                menuItems: await getTopBarMenu(),
             },
             //revalidate: 60, //regenerate the page every 60 seconds
         };
@@ -196,7 +194,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             props: {
                 routeData,
                 currentPath,
-                menuItems : await getTopBarMenu(),
+                menuItems: await getTopBarMenu(),
             },
             //revalidate: 60, //regenerate the page every 60 seconds
         };

@@ -116,7 +116,7 @@ export default function Login({ providers, menuItems }) {
             Not registered yet ?
               {' '}
             <Link href="/signUp">
-              <span className={style.link}>Sign up now !</span>
+              <span className="global_link">Sign up now !</span>
             </Link>
           </div>
         </div>

@@ -27,6 +27,9 @@ export { default as CommentInput } from "./inputs/commentInput";
 export { default as Carousel } from "./carousel/carousel";
 export { default as FullScreenSlider } from "./carousel/fullScreenSlider";
 
+//Routes links pages
+export { default as RoutesLinks } from "./routesLinks/routesLinks";
+
 //Routes pages components
 export { default as RoutePanel } from "./routesContent/routePanel";
 export { default as RoutePhotosPanel } from "./routesContent/photosPanel";
