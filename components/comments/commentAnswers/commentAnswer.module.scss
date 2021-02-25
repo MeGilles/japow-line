@@ -10,17 +10,24 @@
   }
 
   .options {
-    display: flex;
-    flex-direction: row;
+    position: relative;
+
+    width: 100%;
+    height: 50px;
+
+    margin-left: 20px;
+    padding: 10px;
 
     .left_buttons {
       float: left;
 
       display: flex;
       flex-direction: row;
-      justify-content: left;
 
-      width: 50%;
+      justify-content: left;
+      align-items: center;
+
+      max-width: 50%;
     }
 
     .right_buttons {
@@ -28,9 +35,11 @@
 
       display: flex;
       flex-direction: row;
-      justify-content: right;
 
-      width: 50%;
+      justify-content: right;
+      align-items: center;
+
+      max-width: 50%;
     }
   }
 

@@ -32,6 +32,25 @@ a {
   box-sizing: border-box;
 }
 
+.global_link {
+  color: $theme_secondary_color;
+  display: inline-block;
+
+  &:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 1px;
+    background-color: $theme_secondary_color;
+    transition: 0.2s ease-in-out;
+  }
+
+  &:hover {
+    &:after {
+      width: 100%;
+    }
+  }
+}
 
 .default_centered_div {
   display: inline-block;
@@ -112,4 +131,32 @@ a {
 
     box-shadow: 2px 2px 4px rgb(63, 63, 63);
   }
+}
+
+//-----------------------------------------------------------
+//SCROLLBAR
+
+//Firefox
+html {
+  scrollbar-width: auto;
+  scrollbar-color: $theme_secondary_color transparent ;
+}
+
+
+//Chrome
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: $theme_secondary_color;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $theme_secondary_color;
 }

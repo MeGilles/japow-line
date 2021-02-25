@@ -1,17 +1,5 @@
-import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-import { makeStyles } from '@material-ui/core/styles';
-
 import frontData from "../../public/configs/frontData";
 import styles from "./menuButton.module.scss";
-
-const useStyles = makeStyles({
-  expandIcon: {
-    position: "absolute",
-    top: "78%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  },
-});
 
 type Props = {
   name: string;
@@ -21,17 +9,10 @@ type Props = {
   isExpandMenuOpened?: boolean;
   orientation?: string;
   click?: any;
-  size?: any;
   textAlign?: any;
 }
 
 export default function MenuButton(props: Props) {
-
-  const classes = useStyles();
-
-  let setSize = {
-    width: props.size,
-  };
 
   let setTextAlign = {
     textAlign: props.textAlign,
@@ -65,7 +46,7 @@ export default function MenuButton(props: Props) {
       : ""
   }
 
-  let buttonClasses = [styles.myButton, ];
+  let buttonClasses = [styles.myButton,];
 
   if (props.orientation === "vertical") {
     buttonClasses.push(styles.vertical_slider);
@@ -77,7 +58,7 @@ export default function MenuButton(props: Props) {
     <button
       className={buttonClasses.join(" ")}
       onClick={props.click}
-      style={{ ...setSize, ...setTextAlign, ...setBackground, ...setColor }}
+      style={{ ...setTextAlign, ...setBackground, ...setColor }}
     >
       {props.name}
       {props.isExpandMenuButton && (

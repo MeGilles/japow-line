@@ -12,7 +12,7 @@ export default function CommentsPanel() {
         [shouldDisplayNewComment, setShouldDisplayNewComment] = useState(false);
 
     const updateComments = (comment: CommentsTypes.commentType) => {
-        const newComments = comments;
+        const newComments = comments.slice();
         newComments.push(comment);
         setComments(newComments);
         console.log(newComments);
@@ -55,7 +55,7 @@ export default function CommentsPanel() {
                         No comments yet.
                      </div>      
             }
-            <div className={style.new_comment} style={{ bottom: shouldDisplayNewComment ? "0" : "-100px" }}>
+            <div className={style.new_comment} style={{ bottom: shouldDisplayNewComment ? "0" : "-600px" }}>
                 <CommentNew isMain={true} feedBack={updateComments} />
             </div>
         </div>

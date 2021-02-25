@@ -1,10 +1,12 @@
 @import "/styles/theme.scss";
 
 .top_banner {
-    height: $menu_height;
-    width: 100%;
+  position: relative;
 
-    background-image: url("/images/snowy_mountains.jpg");
-    background-size: 100%;
-    background-repeat: no-repeat;
+  width: 100%;
+  height: $menu_height;
+
+  img {
+      object-fit: cover;
+  }
 }
