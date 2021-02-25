@@ -6,6 +6,7 @@ import { Layout } from "../components"
 import { getTopBarMenu } from "../lib/menu";
 
 export default function Welcome({ session, menuItems }) {
+    console.dir(session, {depth:null});
     if (!session) {
         return (
             <Layout menuItems={menuItems}>
@@ -33,10 +34,9 @@ export default function Welcome({ session, menuItems }) {
 }
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context)
     return {
         props: {
-            session,
+            session : await getSession(context),
             menuItems: await getTopBarMenu(), //TODO
         },
 
