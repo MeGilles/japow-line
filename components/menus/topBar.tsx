@@ -64,7 +64,7 @@ export default function TopBar(props: Props) {
       <div className={style.login_space}>
         {
           session ?
-            <Avatar alt="NAME" src={session.profile} />
+            <Avatar alt="NAME" src={session.user.image} />
             :
             <LoginButton />
         }
