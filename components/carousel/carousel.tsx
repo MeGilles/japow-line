@@ -9,7 +9,7 @@ import ArrowRight from './arrowLeft';
 
 type Props = {
     images: { src: string }[],
-    height: number
+    height: string,
 }
 
 export default function Carousel({ images, height }: Props) {

@@ -5,7 +5,7 @@ export default function PhotosPanel() {
 
     return (
         <div className={style.photos_panel}>
-            <Carousel images={fakeImages} height={400} />
+            <Carousel images={fakeImages} height={"55vh"} />
         </div>
     );
 }
@@ -22,5 +22,8 @@ const fakeImages = [
     },
     {
         src: '/images/login_bg.jpg'
+    },
+    {
+        src: '/images/Nao.jpg'
     },
 ]
