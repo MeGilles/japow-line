@@ -19,7 +19,7 @@ export default function RoutesLinks({ currentPath, routes, locations }) {
             <RouteNavigationPanel path={currentPath} />
             <div className={style.routes_links}>
                 <div className={style.title}>
-                    {currentPath[currentPath.length - 1]}
+                    {currentPath  && currentPath[currentPath.length - 1]}
                 </div>
                 <div className={style.description}>
                     Content about the route
@@ -33,7 +33,7 @@ export default function RoutesLinks({ currentPath, routes, locations }) {
                     </div>
                         <div className={style.list}>
                             {
-                                locations !== null && locations.length > 0 ?
+                                locations && locations.length > 0 ?
                                     locations.map((location: { name: string, path: string[] }, index: number) => {
                                         return (
                                             <div className={style.link} key={location.name + index}>

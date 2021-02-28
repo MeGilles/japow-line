@@ -421,5 +421,5 @@ function parseToHTML(text: string) {
 
     const pattern = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi);
 
-    return text.replace(pattern, '<span class="global_link"><a href="$&" target="_blank">$&</a></span>');
+    return text.replace(pattern, '</pre><span class="global_link"><a href="$&" target="_blank">$&</a></span><pre class="not_interpreted_text">');
 }

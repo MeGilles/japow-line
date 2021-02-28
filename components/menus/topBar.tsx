@@ -69,22 +69,24 @@ export default function TopBar(props: Props) {
             key={index}
           />
         ) : (
-          <div className={style.button_container}>
-            <MenuButton name={menuSection.name} click={() => router.push(menuSection.redirection)} key={index} />
+          <div className={style.button_container} key={index}>
+            <MenuButton name={menuSection.name} click={() => router.push(menuSection.redirection)} />
           </div>
         );
       })}
 
       <div className={style.login_space}>
         {
-          session ?
-            <div className={style.avatar}>
-              <Avatar className={classes.avatar} alt="NAME" src={session.user.image}>
-                {session.user.email.charAt(0).toUpperCase()}
-              </Avatar>
-            </div>
-            :
-            <LoginButton />
+          !loading && (
+            session ?
+              <div className={style.avatar}>
+                <Avatar className={classes.avatar} alt="NAME" src={session.user.image}>
+                  {session.user.email.charAt(0).toUpperCase()}
+                </Avatar>
+              </div>
+              :
+              <LoginButton />
+          )
         }
       </div>
     </div>
