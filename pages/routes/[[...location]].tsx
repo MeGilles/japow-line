@@ -155,9 +155,6 @@ export default function Location({ subLocations, subRoutes, routeData, menuItems
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-
-    console.dir(context, {depth:null})
-
     //const locale = context.locale; //not used for the moment
     let currentPath: string[];
     switch (typeof context.params.location) {
@@ -169,8 +166,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         default:
             currentPath = []
     }
-
-    //console.dir(currentPath);
 
     if (currentPath && currentPath.length == 0 || (await db.route.isLocation(currentPath && currentPath[currentPath.length - 1]))) {
         let subLocations: db.types.BasicPageData[]

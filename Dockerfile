@@ -1,12 +1,11 @@
 FROM node
 
-# COPY . /app
+COPY . /app
 
-# WORKDIR /app
-# RUN npm i
+WORKDIR /app
+RUN npm i
 # RUN npx prisma generate
-# RUN npm run build
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "start" ]
+ENTRYPOINT [ "/bin/bash", "-c", "npm run build && npm run start" ]
