@@ -6,6 +6,13 @@ import { TopBanner, RouteNavigationPanel } from '../';
 
 export default function RoutesLinks({ currentPath, routes, locations }) {
 
+    if(currentPath === undefined){
+       return (
+           <>
+           </>
+       )
+    }
+
     return (
         <>
             <TopBanner />

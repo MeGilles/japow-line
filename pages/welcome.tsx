@@ -8,7 +8,7 @@ import { getTopBarMenu } from "../lib/menu";
 export default function Welcome({ menuItems }) {
     const [session, loading] = useSession();
 
-    console.dir(session, {depth:null});
+    //console.dir(session, {depth:null});
 
     if (!session) {
         return (

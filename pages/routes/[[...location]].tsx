@@ -116,7 +116,6 @@ function LocationPage(currentPath, subLocations: db.types.BasicPageData[], subRo
     let locationLinks = [];
     const locationsArray: db.types.BasicPageData[] = subRoutes;
 
-
     /*
 
     for (let i = 0; i < (routesArray ? routesArray.length : 0); i++) {
@@ -146,6 +145,8 @@ export default function Location({ subLocations, subRoutes, routeData, menuItems
     //subRoutes : db.types.BasicPageData[]
     //routeData : not yet properly defined
 
+    //console.dir({ subLocations, subRoutes, routeData, menuItems, currentPath })
+
     if (routeData != null) {
         return RoutePage(routeData, currentPath, null, menuItems)
     } else {
@@ -154,6 +155,9 @@ export default function Location({ subLocations, subRoutes, routeData, menuItems
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+
+    console.dir(context, {depth:null})
+
     //const locale = context.locale; //not used for the moment
     let currentPath: string[];
     switch (typeof context.params.location) {
@@ -162,9 +166,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
         case 'object':
             currentPath = context.params.location;
             break;
-        case 'undefined':
+        default:
             currentPath = []
     }
+
+    //console.dir(currentPath);
 
     if (currentPath && currentPath.length == 0 || (await db.route.isLocation(currentPath && currentPath[currentPath.length - 1]))) {
         let subLocations: db.types.BasicPageData[]
@@ -224,7 +230,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
         fallback: true,
     };
 }
-
 
 function numberToMonth(month: number) {
     switch (month) {
