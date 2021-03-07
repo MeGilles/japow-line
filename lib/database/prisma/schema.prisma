@@ -90,8 +90,7 @@ model Route {
   routeType   RouteType? @relation(fields: [routeTypeId], references: [id])
   routeTypeId Int?
 
-  altitudeZone   AltitudeZone? @relation(fields: [altitudeZoneId], references: [id])
-  altitudeZoneId Int?
+  altitudeZone   AltitudeZone[]
 
   startPointType   PointType? @relation("Start", fields: [startPointTypeId], references: [id])
   startPointTypeId Int?
