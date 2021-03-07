@@ -11,58 +11,67 @@ generator client {
 }
 
 // for instance : Go&Return, Round-trip, Traverse, Several days
-model RouteType{
-  id      Int      @default(autoincrement()) @id
-  name    String   @unique
-  name_jp String?  @unique
+model RouteType {
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  name_jp String? @unique
+  Route   Route[]
 }
 
 // for instance: Ex,Alpine, Forest-limit, Below Forest-limit , Area not covered by snow
-model AltitudeZone{
-  id      Int      @default(autoincrement()) @id
-  name    String   @unique
-  name_jp String?  @unique
+model AltitudeZone {
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  name_jp String? @unique
 
+  Route Route[]
 }
 
 // used for start and end points
 // for instance : Ex, Big Parking / Parking limited / Top of ski-area
-model PointType{
-  id      Int      @default(autoincrement()) @id
-  name    String   @unique
-  name_jp String?  @unique
+model PointType {
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  name_jp String? @unique
 
-  start Route[]  @relation("Start")
-  end   Route[]  @relation("End")
-}
-
-model Map_ {
-    id      Int   @default(autoincrement()) @id
+  start Route[] @relation("Start")
+  end   Route[] @relation("End")
 }
 
 model BarChart {
-    id      Int   @default(autoincrement()) @id
+  id    Int     @id @default(autoincrement())
+  Route Route[]
 }
 
-// hierarchical places for instance : Alps > Mont Blanc massif > Dent du Géant
-model Location{
-   id       Int        @default(autoincrement()) @id
+model Area {
+  id Int @id @default(autoincrement())
 
-   parent   Location?  @relation(fields: [parentId], references: [id])
-   parentId Int?     
-   
-   name     String     @unique
-   name_jp  String?     @unique
+  name    String  @unique
+  name_jp String? @unique
+
+  mountain Mountain[]
+}
+
+model Mountain {
+  id Int @id @default(autoincrement())
+
+  name    String  @unique
+  name_jp String? @unique
+
+  area    Area? @relation(fields: [areaId], references: [id])
+  areaId Int?
+
+  routes Route[]
 }
 
 model Route {
-  id                  Int            @default(autoincrement()) @id
+  id Int @id @default(autoincrement())
 
-  name                String          @unique
-  name_jp             String          @unique
+  name    String @unique
+  name_jp String @unique
 
-  description         String?
-  description_jp      String?
+  description    String?
+  description_jp String?
 
   elevationDifference Int?
   maxAltitude         Int?
@@ -71,52 +80,56 @@ model Route {
   elevationDistance   Int?
   decentDistance      Int?
 
-  recomendedMonth     Int[] //numbers between 1 and 12
-  picturesPath        String[]  //the paths to pictures  
-  routePoints         String[]  //list of location points as string //for instance  [Chambéry, St Pierre d'Albigny, Col du Frêne, Chambéry]
+  recomendedMonth Int[] //numbers between 1 and 12
+  picturesPath    String[] //the paths to pictures  
+  routePoints     String[] //list of location points as string //for instance  [Chambéry, St Pierre d'Albigny, Col du Frêne, Chambéry]
 
-  location            Location?     @relation(fields: [locationId], references: [id])
-  locationId          Int?
+  mountain   Mountain? @relation(fields: [mountainId], references: [id])
+  mountainId Int?
 
-  routeType           RouteType?     @relation(fields: [routeTypeId], references: [id])
-  routeTypeId         Int?
+  routeType   RouteType? @relation(fields: [routeTypeId], references: [id])
+  routeTypeId Int?
 
-  altitudeZone        AltitudeZone?  @relation(fields: [altitudeZoneId], references: [id])
-  altitudeZoneId      Int?
+  altitudeZone   AltitudeZone? @relation(fields: [altitudeZoneId], references: [id])
+  altitudeZoneId Int?
 
-  startPointType      PointType?    @relation("Start", fields: [startPointTypeId], references: [id])
-  startPointTypeId    Int?
+  startPointType   PointType? @relation("Start", fields: [startPointTypeId], references: [id])
+  startPointTypeId Int?
 
-  endPointType        PointType?   @relation(name: "End", fields: [endPointTypeId], references: [id])
-  endPointTypeId      Int?
+  endPointType   PointType? @relation(name: "End", fields: [endPointTypeId], references: [id])
+  endPointTypeId Int?
 
-  map                 Map_?          @relation(fields: [mapId], references: [id])
-  mapId               Int?            
+  mapUrl  String?
 
-  barChart            BarChart?      @relation(fields: [barChartId], references: [id])
-  barChartId          Int?            
+  barChart   BarChart? @relation(fields: [barChartId], references: [id])
+  barChartId Int?
+  
+  Post       Post[]
 }
 
 //a post on a route page
 model Post {
-  id              Int      @default(autoincrement()) @id
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  title           String?
-  content         String
-  picturesPath    String[]
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  content      String
+  picturesPath String[]
 
-  route           Route    @relation(fields: [routeId], references: [id])
-  routeId         Int
+  likeCount   Int @default(0)
 
-  author          Account  @relation(fields: [authorId], references: [id])
-  authorId        Int
+  route   Route @relation(fields: [routeId], references: [id])
+  routeId Int
+
+  author   Account @relation(fields: [authorId], references: [id])
+  authorId Int
 }
+
+
 
 //models bellow are used by next-auth
 
 model Account {
-  id                 Int       @default(autoincrement()) @id
+  id                 Int       @id @default(autoincrement())
   compoundId         String    @unique @map(name: "compound_id")
   userId             Int       @map(name: "user_id")
   providerType       String    @map(name: "provider_type")
@@ -128,33 +141,35 @@ model Account {
   createdAt          DateTime  @default(now()) @map(name: "created_at")
   updatedAt          DateTime  @default(now()) @map(name: "updated_at")
 
+
   @@index([providerAccountId], name: "providerAccountId")
   @@index([providerId], name: "providerId")
   @@index([userId], name: "userId")
-
   @@map(name: "accounts")
+  Post Post[]
 }
 
 model User {
-  id            Int       @default(autoincrement()) @id
-  name          String?
-  email         String?   @unique
-  hashedPassword String? 
+  id                 Int       @id @default(autoincrement())
+  name               String?
+  email              String?   @unique
+  hashedPassword     String?
   hashedPasswordSalt String?
-  emailVerified DateTime? @map(name: "email_verified")
-  image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  emailVerified      DateTime? @map(name: "email_verified")
+  image              String?
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
   @@map(name: "users")
 }
 
 model VerificationRequest {
-  id         Int      @default(autoincrement()) @id
+  id         Int      @id @default(autoincrement())
   identifier String
   token      String   @unique
   expires    DateTime
-  createdAt  DateTime  @default(now()) @map(name: "created_at")
-  updatedAt  DateTime  @default(now()) @map(name: "updated_at")
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
 
   @@map(name: "verification_requests")
 }
