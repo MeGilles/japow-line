@@ -1,4 +1,5 @@
 import style from './routePanel.module.scss';
+import { RouteData } from '../../lib/types';
 
 import {
     RouteInformationPanel,
@@ -9,24 +10,7 @@ import {
     RouteCommentsPanel
 } from '../';
 
-type Props = {
-    routeName: string,
-    mountainName: string,
-    recommendedMonth: string,
-    routeType: string,
-    altitudeZone: string,
-    elevationDifference: number,
-    maxAltitude: number,
-    minAltitude: number,
-    totalDistance: number,
-    elevationDistance: number,
-    decentDistance: number,
-    startPoint: string,
-    goalPoint: string,
-    map: any,
-    elevationChart: any,
-    description: string
-}
+type Props = RouteData;
 
 export default function RoutePanel({
     routeName,
@@ -41,8 +25,8 @@ export default function RoutePanel({
     elevationDistance,
     decentDistance,
     startPoint,
-    goalPoint,
-    map,
+    endPoint,
+    mapUrl,
     elevationChart,
     description
 }: Props) {
@@ -66,8 +50,8 @@ export default function RoutePanel({
                     elevationDistance={elevationDistance}
                     decentDistance={decentDistance}
                     startPoint={startPoint}
-                    goalPoint={goalPoint}
-                    map={map}
+                    endPoint={endPoint}
+                    mapUrl={mapUrl}
                     elevationChart={elevationChart}
                 />
                 <div className={style.secondary_information}>

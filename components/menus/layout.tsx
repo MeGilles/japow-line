@@ -5,10 +5,11 @@ import { ThemeProvider } from '@material-ui/styles';
 import theme from "../../styles/materialTheme";
 import style from "./layout.module.scss";
 import TopBar from "./topBar";
+import { MenuContent } from "../../lib/menu";
 
 export const siteTitle = "Next.js Sample Website";
 
-export default function Layout({ children, menuItems }: { children: React.ReactNode, menuItems: any }) {
+export default function Layout({ children, menuItems }: { children: React.ReactNode, menuItems: MenuContent[] }) {
 
   const [prevScroll, setPrevScroll] = useState(0),
     [scrollingDown, setScrollingDown] = useState(false),

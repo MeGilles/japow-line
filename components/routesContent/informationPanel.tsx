@@ -2,9 +2,9 @@ import style from './informationPanel.module.scss';
 
 type Props = {
     mountainName: string,
-    recommendedMonth: string,
+    recommendedMonth: string[],
     routeType: string,
-    altitudeZone: string,
+    altitudeZone: string[],
     elevationDifference: number,
     maxAltitude: number,
     minAltitude: number,
@@ -12,8 +12,8 @@ type Props = {
     elevationDistance: number,
     decentDistance: number,
     startPoint: string,
-    goalPoint: string,
-    map: any,
+    endPoint: string,
+    mapUrl: string,
     elevationChart: any,
 }
 
@@ -29,8 +29,8 @@ export default function InformationPanel({
     elevationDistance,
     decentDistance,
     startPoint,
-    goalPoint,
-    map,
+    endPoint,
+    mapUrl,
     elevationChart }: Props) {
 
 
@@ -86,8 +86,8 @@ export default function InformationPanel({
             content: startPoint
         },
         {
-            text: "Goal point:",
-            content: goalPoint
+            text: "End point:",
+            content: endPoint
         },
     ]
 
@@ -114,7 +114,7 @@ export default function InformationPanel({
                 </div>
                 <div className={style.graphical_information}>
                     <div className={style.map}>
-                        {map}
+                        {mapUrl}
                     </div>
                     <div className={style.elevation_chart}>
                         {elevationChart}
