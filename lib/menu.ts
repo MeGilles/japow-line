@@ -19,26 +19,13 @@ export async function getTopBarMenu(): Promise<MenuContent[]> {
     redirection: "/routes",
     subsections: [],
   };
-  let rootRoutes = await db.route.getSubLocations(null);
+  let areas = await db.route.getAllAreas();
 
-  for (let i = 0; i < rootRoutes.length; i++ ) {
-    const route = rootRoutes[i];
-    routes.subsections.push({name : route.name, redirection : pathAsString(route.path) });
+  for (let i = 0; i < areas.length; i++ ) {
+    routes.subsections.push({name : areas[i], redirection : "/routes/"+areas[i] });
   }
 
   return [routes].concat(BaseMenu);
-}
-
-/**
- * Returns the path in the string list form into a routable string on the website (begining with /routes/)
- * @param path 
- */
-function pathAsString(path:string[]) : string {
-  let result : string = "/routes/";
-  for(let i = 0; i<path.length; i++){
-    result += path[i] + "/";
-  }
-  return result;
 }
 
 /**
