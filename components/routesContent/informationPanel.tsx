@@ -116,7 +116,6 @@ export default function InformationPanel({
                     <div className={style.map}>
                         {/*mapUrl*/}
                         <iframe src="https://www.google.com/maps/d/embed?mid=1o6YnKQp6fH9ST_4J2fNH3SkOD9C8fQnt&hl=ja" width="100%" height="100%" />
-
                     </div>
                     <div className={style.elevation_chart}>
                         {elevationChart}
