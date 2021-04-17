@@ -1,11 +1,15 @@
 import { GetStaticProps } from "next";
-import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import React from "react";
 
 import { Layout } from "../components"
 import { getTopBarMenu } from "../lib/menu";
 
-export default function Welcome({ session, menuItems }) {
+export default function Welcome({ menuItems }) {
+    const [session, loading] = useSession();
+
+    //console.dir(session, {depth:null});
+
     if (!session) {
         return (
             <Layout menuItems={menuItems}>
@@ -28,18 +32,16 @@ export default function Welcome({ session, menuItems }) {
 
                 </p>
             </div>
+            <img src={session.user.image}></img>
         </Layout>
     );
 }
 
-export async function getServerSideProps(context) {
-    const session = await getSession(context)
+export const getStaticProps: GetStaticProps = async (context) => {
     return {
         props: {
-            session,
-            menuItems: await getTopBarMenu(), //TODO
+            menuItems: await getTopBarMenu()
         },
-
     }
 }
 

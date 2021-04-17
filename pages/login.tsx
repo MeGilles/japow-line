@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { signIn, providers, SessionProvider } from 'next-auth/client'
 import Link from 'next/link';
 import Head from 'next/head';
@@ -116,7 +116,7 @@ export default function Login({ providers, menuItems }) {
             Not registered yet ?
               {' '}
             <Link href="/signUp">
-              <span className={style.link}>Sign up now !</span>
+              <span className="global_link">Sign up now !</span>
             </Link>
           </div>
         </div>
@@ -125,7 +125,7 @@ export default function Login({ providers, menuItems }) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       providers: await providers(),

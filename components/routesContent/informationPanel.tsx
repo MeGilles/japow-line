@@ -94,7 +94,7 @@ export default function InformationPanel({
     return (
         <div className={style.information_panel}>
             <div className={style.title}>
-                The situation in recent
+                General information
             </div>
             <div className={style.content}>
                 <div className={style.textual_information}>
@@ -114,7 +114,9 @@ export default function InformationPanel({
                 </div>
                 <div className={style.graphical_information}>
                     <div className={style.map}>
-                        {mapUrl}
+                        {/*mapUrl*/}
+                        <iframe src="https://www.google.com/maps/d/embed?mid=1o6YnKQp6fH9ST_4J2fNH3SkOD9C8fQnt&hl=ja" width="100%" height="100%" />
+
                     </div>
                     <div className={style.elevation_chart}>
                         {elevationChart}

@@ -33,7 +33,7 @@ const options = {
       async authorize(credentials) {
         const passwordData = await db.user.getPassword(credentials.email);
         if (compare(credentials.password, passwordData)) {
-          return { email: credentials.email };
+          return db.user.getSessionData(credentials.email);
         } else {
           // If you return null or false then the credentials will be rejected
           return null
