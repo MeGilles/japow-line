@@ -14,14 +14,17 @@ import { Picker, Emoji } from 'emoji-mart-next'
 import style from './commentInput.module.scss';
 import { OutsideClickWrapper, CommentsTypes } from '../';
 
+const rowHeight = 19;
+const maxRows = 15;
 
 type Props = {
     isMain: boolean,
     shouldSend: boolean,
     feedBack: any,
+    userInfo: CommentsTypes.userType,
 }
 
-export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
+export default function CommentInput({ isMain, shouldSend, feedBack, userInfo }: Props) {
 
     const textareaRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -39,6 +42,12 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
     //++++++++++++++++++++++++++++++++++++++++++++++
 
     //Textarea management
+    //Update the cursor position inside the textare
+    useEffect(() => {
+        textareaRef.current.selectionStart = textareaRef.current.selectionEnd = currentPlace;
+    }, [commentString])
+
+    //Special keys management
     const handleKeyDown = (event: React.KeyboardEvent) => {
 
         setCurrentPlace(currentPlace + 1);
@@ -50,7 +59,7 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
                 start = textareaRef.current.selectionStart,
                 end = textareaRef.current.selectionEnd;
             setCommentString(val.substring(0, start) + '\t' + val.substring(end));
-            textareaRef.current.selectionStart = textareaRef.current.selectionEnd = start + 1;
+            setCurrentPlace(start + 1);
         }
     }
 
@@ -62,8 +71,6 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
     //Adapt textarea size to its content
     const inputComment = useCallback((event) => {
 
-        const rowHeight = 19;
-        const maxRows = 10;
         event.target.rows = 1;
 
         const currentRows = ~~((event.target.scrollHeight - 10) / rowHeight);
@@ -74,8 +81,8 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
         }
 
         setCommentRows(currentRows > maxRows ? maxRows : currentRows);
-
         setCommentString(event.target.value);
+        setCurrentPlace(event.target.selectionStart);
     }, [commentString])
 
 
@@ -95,8 +102,8 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
         var start = textareaRef.current.selectionStart,
             end = textareaRef.current.selectionEnd;
         setCommentString(
-            commentString.substring(0, start) + emoji.native + commentString.substring(end, commentString.length)
-        );
+            commentString.substring(0, start) + emoji.native + commentString.substring(end)
+        )
         setCurrentPlace(currentPlace + emoji.native.length);
     }
 
@@ -127,7 +134,6 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
         ];
 
         let filesIndex = 0;
-        let currSuccessIterator = 0;
 
         const attachmentsList: CommentsTypes.attachmentType[] = [];
 
@@ -157,7 +163,6 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
                 }
 
                 filesIndex++
-                currSuccessIterator++;
                 if (filesIndex < files.length) {
                     readFile(files[filesIndex]);
                 } else {
@@ -165,8 +170,8 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
                     for (const attachment of attachmentsList) {
                         newAttachments.push(attachment);
                     }
-                    setSuccessIterator(successIterator +  currSuccessIterator);
                     setAttachments(newAttachments);
+                    setAttachments(attachments.filter((value, index, array) => array.findIndex(instance => (instance.src === value.src)) === index));
                 }
             }
 
@@ -182,17 +187,21 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
 
     //Remove an image
     const removeAttachment = (attachment: number) => {
-        const newAttachments = attachments;
+        const newAttachments = attachments.slice();
         newAttachments.splice(attachment, 1);
         setAttachments(newAttachments);
-        setSuccessIterator(successIterator - 1);
         setErrorRaised("");
     }
+
+    //Update successIterator
+    useEffect(() => {
+        setSuccessIterator(attachments.length);
+    }, [attachments])
 
     //Adapt the scroll to overflowX
     const rotateScroll = (event: WheelEvent) => {
         if (event.deltaY !== undefined) {
-            attachmentsRef.current.scrollLeft -= (event.deltaY * 10);
+            attachmentsRef.current.scrollLeft += (event.deltaY * 20);
         }
         event.preventDefault();
     }
@@ -212,10 +221,11 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
     const handleSubmit = () => {
         //TO DO something with the database
         if (commentString !== null && commentString.length > 0) {
-            feedBack(createComment());
+            feedBack(true, createComment());
             reset();
         } else {
             setErrorRaised("You cannot send a blank message.");
+            feedBack(false);
         }
     }
 
@@ -224,9 +234,9 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
         if (isMain) {
             const newComment = {
                 user: {
-                    name: "TODO-WITH-SESSION",
-                    avatar: "TODO-WITH-SESSION",
-                    role: "TODO-WITH-SESSION",
+                    name: userInfo.name !== null ? userInfo.name : "NoDataFound",
+                    avatar: userInfo.avatar !== null ? userInfo.avatar : "NoDataFound",
+                    role: userInfo.role !== null ? userInfo.role : "NoDataFound",
                 },
                 content: parseToHTML(commentString),
                 attachments: attachments,
@@ -237,9 +247,9 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
         } else {
             const newComment = {
                 user: {
-                    name: "TODO-WITH-SESSION",
-                    avatar: "TODO-WITH-SESSION",
-                    role: "TODO-WITH-SESSION",
+                    name: userInfo.name !== null ? userInfo.name : "NoDataFound",
+                    avatar: userInfo.avatar !== null ? userInfo.avatar : "NoDataFound",
+                    role: userInfo.role !== null ? userInfo.role : "NoDataFound",
                 },
                 content: parseToHTML(commentString),
                 attachments: attachments,
@@ -310,46 +320,47 @@ export default function CommentInput({ isMain, shouldSend, feedBack }: Props) {
                 </div>
 
             </div>
-
-            <div className={style.separating_line} />
-
             {
                 (attachments.length > 0 || (errorRaised !== null && errorRaised !== "")) &&
-                <div className={style.second_row}>
-                    <div className={style.header}>
-                        <AttachmentIcon fontSize="default" />
+                <>
+                    <div className={style.separating_line} />
+
+                    <div className={style.second_row}>
+                        <div className={style.header}>
+                            <AttachmentIcon fontSize="default" /> no duplicates
                     </div>
-                    <div className={style.content}>
-                        {
-                            errorRaised !== null && errorRaised !== ""
-                                ?
-                                <div className={style.error}>
-                                    <ErrorIcon fontSize="default" />
-                                    <br />
-                                    Error:{' ' + errorRaised}
-                                </div>
-                                : <div className={style.success}>
-                                    <DoneIcon fontSize="large" />
-                                    <br />
-                                    {successIterator}
-                                </div>
-                        }
-                        <div className={style.attachments_container} ref={attachmentsRef} onMouseEnter={modifyScroll} onMouseLeave={cancelScrollModifications} >
+                        <div className={style.content}>
                             {
-                                attachments.map((image, index) => {
-                                    return (
-                                        <div className={style.image_container} key={index} onClick={() => removeAttachment(index)}>
-                                            <Image className={style.image} src={image.src} alt={"image-" + index} layout="fill" />
-                                            <div className={style.delete_icon}>
-                                                <DeleteIcon fontSize="default" color="secondary" />
-                                            </div>
-                                        </div>
-                                    )
-                                })
+                                errorRaised !== null && errorRaised !== ""
+                                    ?
+                                    <div className={style.error}>
+                                        <ErrorIcon fontSize="default" />
+                                        <br />
+                                    Error:{' ' + errorRaised}
+                                    </div>
+                                    : <div className={style.success}>
+                                        <DoneIcon fontSize="large" />
+                                        <br />
+                                        {successIterator}
+                                    </div>
                             }
+                            <div className={style.attachments_container} ref={attachmentsRef} onMouseEnter={modifyScroll} onMouseLeave={cancelScrollModifications} >
+                                {
+                                    attachments.map((image, index) => {
+                                        return (
+                                            <div className={style.image_container} key={index} onClick={() => removeAttachment(index)}>
+                                                <Image className={style.image} src={image.src} alt={"image-" + index} layout="fill" />
+                                                <div className={style.delete_icon}>
+                                                    <DeleteIcon fontSize="default" color="secondary" />
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
+                </>
             }
         </div>
     );
@@ -406,11 +417,9 @@ function parseToHTML(text: string) {
         text = text.concat(tabIndenterEnd);
     }
 
-
     text = text.concat(paraphEnd);
 
-    console.log(text);
+    const pattern = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi);
 
-
-    return text;
+    return text.replace(pattern, '</pre><span class="global_link"><a href="$&" target="_blank">$&</a></span><pre class="not_interpreted_text">');
 }

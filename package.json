@@ -15,6 +15,7 @@
     "@material-ui/icons": "^4.11.2",
     "@prisma/client": "^2.16.1",
     "csstype": "^3.0.6",
+    "dompurify": "^2.2.6",
     "emoji-mart": "^3.0.0",
     "emoji-mart-next": "^2.11.2",
     "gray-matter": "^4.0.2",
@@ -27,7 +28,6 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-parallax": "^3.2.0",
-    "react-spring": "^8.0.27",
     "remark": "^13.0.0",
     "remark-html": "^13.0.1",
     "reselect": "^4.0.0"

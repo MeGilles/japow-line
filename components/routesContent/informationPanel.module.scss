@@ -1,6 +1,7 @@
 @import "/styles/theme.scss";
 
-.information_panel {
+.information_panel { 
+
   .title {
     font-size: $subtitle_text_size;
     text-indent: 2rem;
@@ -18,7 +19,9 @@
     flex-direction: row;
 
     .textual_information {
-      width: 60%;
+      width: 50%;
+
+      text-align: left;
 
       .info_item {
         font-size: $global_big_text_size;
@@ -35,17 +38,17 @@
     .graphical_information {
       display: flex;
       flex-direction: column;
-      width: 40%;
+      width: 50%;
 
       .map {
         background-color: darkgrey;
-        height: 60%;
+        height: 500px;
         margin: 5px;
       }
 
       .elevation_chart {
         background-color: darkgrey;
-        height: 40%;
+        height: 200px;
         margin: 5px;
       }
     }

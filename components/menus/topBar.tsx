@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from 'next/router'
 import Avatar from "@material-ui/core/Avatar";
 import { useSession } from 'next-auth/client';
 
-import frontData from "../../public/configs/frontData";
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import style from "./topBar.module.scss";
 import { MenuContent } from "../../lib/menu";
 import Menu from "./menu";
 import MenuButton from "./menuButton";
 import LoginButton from "./loginButton";
-import ElasticGlue from "../utils/elasticGlue";
 
-const leftGlueSize = '20%';
-const rightGlueSize = '15%';
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    avatar: {
+      width: "100%",
+      height: "100%",
+      fontSize: "200%",
+      color: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main
+    },
+  }),
+);
 
 type Props = {
   menuItems: {
@@ -29,21 +37,26 @@ type Props = {
 
 export default function TopBar(props: Props) {
 
-  var buttonsNbr: number = props.menuItems.length;
-  var buttonsPartSizePercent: number = frontData.menuButtonsTotalMaxWidth.value;
-
-  var buttonSizePercent: number = buttonsNbr < 5 ? 15 : buttonsPartSizePercent / buttonsNbr;
-  var buttonSize: string = buttonSizePercent + frontData.menuButtonsTotalMaxWidth.unit;
+  const [toggledMenu, setToggledMenu] = useState(-1);
 
   const [session, loading] = useSession();
 
   const router = useRouter();
 
+  const classes = useStyles();
+
+  //Necessary to avoid multiples menu toggled cause by too fast changes
+  const manageMenusToggling = (requestingMenu: number, status: boolean) => {
+    if (status) {
+      setToggledMenu(requestingMenu);
+    } else {
+      setToggledMenu(-1);
+    }
+  }
+
   return (
     <div className={style.menu_container}>
-      <img className={style.logo} src={frontData.images.logo} alt="logo" onClick={() => router.push("/")} />
-
-      <ElasticGlue width={leftGlueSize} />
+      <img className={style.logo} src={'/images/logo.png'} alt="logo" onClick={() => router.push("/")} />
 
       {props.menuItems.map((menuSection: MenuContent, index: number) => {
         return menuSection.subsections ? (
@@ -51,22 +64,29 @@ export default function TopBar(props: Props) {
             name={menuSection.name}
             redirection={menuSection.redirection}
             subsections={menuSection.subsections}
-            size={buttonSize}
+            feedBack={(status: boolean) => manageMenusToggling(index, status)}
+            shouldOpen={index === toggledMenu}
             key={index}
           />
         ) : (
-            <MenuButton name={menuSection.name} size={buttonSize} click={() => router.push(menuSection.redirection)} key={index} />
-          );
+          <div className={style.button_container} key={index}>
+            <MenuButton name={menuSection.name} click={() => router.push(menuSection.redirection)} />
+          </div>
+        );
       })}
-
-      <ElasticGlue width={rightGlueSize} />
 
       <div className={style.login_space}>
         {
-          session ?
-            <Avatar alt="NAME" src={session.profile} />
-            :
-            <LoginButton />
+          !loading && (
+            session ?
+              <div className={style.avatar}>
+                <Avatar className={classes.avatar} alt="NAME" src={session.user.image}>
+                  {session.user.email.charAt(0).toUpperCase()}
+                </Avatar>
+              </div>
+              :
+              <LoginButton />
+          )
         }
       </div>
     </div>
@@ -79,7 +99,7 @@ TopBar.defaultProps = {
       name: "The menu content was not passed to the topBar",
       redirection: "/",
       subsections: [],
-      size:"auto",
+      size: "auto",
     }
   ],
 }

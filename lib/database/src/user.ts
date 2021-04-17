@@ -43,3 +43,17 @@ export async function getPassword(email: string) : Promise<hashedPassword> {
         salt : data.hashedPasswordSalt
     }
 }
+
+export async function getSessionData(email: string) {
+    return prisma.user.findUnique({
+        where: {
+            email: email
+        },
+        select : {
+            name : true,
+            email : true,
+            image : true,
+        }
+    });
+}
+

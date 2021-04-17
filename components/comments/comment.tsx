@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react';
 
+import DOMPurify from 'dompurify'
+
 import style from './comment.module.scss';
 import {
     CommentHeader,
@@ -48,8 +50,8 @@ export default function Comment({ comment }: Props) {
 
             <div className={style.main_comment}>
                 <CommentHeader user={comment.user} />
-
-                <div className={style.content} dangerouslySetInnerHTML={{__html: comment.content}} />
+                
+                <div className={style.content} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(comment.content)}} />
 
                 <CommentAttachments images={comment.attachments} />
 

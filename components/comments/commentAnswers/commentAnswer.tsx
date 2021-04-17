@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify'
+
 import style from './commentAnswer.module.scss';
 import { CommentAnswerHeader, LikeButton, ReportButton, CommentsTypes } from '../../';
 import CommentAttachments from '../commentAttachments';
@@ -13,7 +15,7 @@ export default function CommentAnswer({ answer }: Props) {
 
             <CommentAnswerHeader user={answer.user} />
 
-            <div className={style.content} dangerouslySetInnerHTML={{ __html: answer.content }} />
+            <div className={style.content} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(answer.content) }} />
 
             <CommentAttachments images={answer.attachments} />
 

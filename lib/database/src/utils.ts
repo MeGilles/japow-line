@@ -137,9 +137,9 @@ export async function populateDb() {
             }
         });
 
-        console.log("database populated");
+        console.log("LOG : database utils.tx : \tdatabase populated");
     } catch {
-        console.log("something whent wrond while adding data to database, maybe it was already present?");
+        console.log("LOG : database utils.tx : \tsomething whent wrond while adding data to database, maybe it was already present?");
     }
 }
 
@@ -202,7 +202,7 @@ export async function dropAll() {
     await prisma.barChart.deleteMany({});
     await prisma.mountain.deleteMany({});
     await prisma.post.deleteMany({});
-    console.log("all data deleted");
+    console.log("LOG : database utils.tx : \tall data deleted");
 }
 
 /**

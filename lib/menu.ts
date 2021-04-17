@@ -9,10 +9,18 @@ export interface MenuContent {
   }[] | null,
 }
 
+var menuCache : MenuContent[];
+
 /**
  * Get the elements to build the topbar
  */
 export async function getTopBarMenu(): Promise<MenuContent[]> {
+  if(menuCache !== undefined){
+    console.log("LOG: menu.tx : \tused cache")
+    return menuCache;
+  }
+  console.log("LOG: menu.tx : \tdid not use cache")
+
 
   let routes: MenuContent = {
     name: "ROUTES",
@@ -25,7 +33,8 @@ export async function getTopBarMenu(): Promise<MenuContent[]> {
     routes.subsections.push({name : areas[i], redirection : "/routes/"+areas[i] });
   }
 
-  return [routes].concat(BaseMenu);
+  menuCache = [routes].concat(BaseMenu);
+  return menuCache;
 }
 
 /**
