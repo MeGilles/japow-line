@@ -1,7 +1,7 @@
 import style from './descriptionPanel.module.scss';
 
 type Props = {
-    description: string
+    description?: string
 }
 
 export default function DescriptionPanel({ description }: Props) {

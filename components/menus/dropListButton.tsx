@@ -1,5 +1,5 @@
 import frontData from "../../public/configs/frontData";
-import styles from "./menuButton.module.scss";
+import styles from "./dropListButton.module.scss";
 
 type Props = {
   name: string;
@@ -12,7 +12,7 @@ type Props = {
   textAlign?: any;
 }
 
-export default function MenuButton(props: Props) {
+export default function DropListButton(props: Props) {
 
   let setTextAlign = {
     textAlign: props.textAlign,
@@ -70,7 +70,7 @@ export default function MenuButton(props: Props) {
   );
 }
 
-MenuButton.defaultProps = {
+DropListButton.defaultProps = {
   name: "unnamed",
   isToggled: false,
   isHovered: false,

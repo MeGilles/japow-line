@@ -5,10 +5,12 @@ import Link from 'next/link';
 import Head from 'next/head';
 
 import style from './login.module.scss';
-import { Layout, InputTextField, InputCheckbox, ClassicButton, LineButton } from '../components';
+
+import { Layout, InputTextField, InputCheckbox, ClassicButton, GoogleButton, FacebookButton, TwitterButton } from '../components';
 import { getTopBarMenu } from '../lib/menu';
 
-const acceptedProviders = ['google', 'line', 'github', 'email']
+
+const acceptedProviders = ['google', 'facebook', 'twitter', 'email']
 
 
 export default function Login({ providers, menuItems }) {
@@ -67,11 +69,24 @@ export default function Login({ providers, menuItems }) {
     }
   }
 
+  function mapProvidersButtons(name: string) {
+    if (name == "google") {
+      return <GoogleButton className={style.provider} onClick={() => signIn(name)} key={name} />
+    } 
+    else if (name == "facebook") {
+      return <FacebookButton className={style.provider} onClick={() => signIn(name)} key={name} />
+    } 
+    else if (name == "twitter") {
+      return <TwitterButton className={style.provider} onClick={() => signIn(name)} key={name} />
+    }
+  }
+
   return (
     <Layout menuItems={menuItems}>
       <Head>
         <title>Login</title>
       </Head>
+      <div className={style.background} />
       <div className={style.login_wrapper}>
         <div className={style.connections_container}>
           <div className={style.title}>
@@ -80,41 +95,35 @@ export default function Login({ providers, menuItems }) {
           <div className={style.form}>
             <form onSubmit={handleSubmit} autoComplete="on">
               <div className={style.form_group}>
-                <InputTextField name="Email" value={email} onChange={inputEmail} />
-                <div className={style.form_error_field}>
-                  {errors["email"]}
-                </div>
+                <InputTextField className={style.textInput} name="Email" variant="outlined" 
+                                value={email} onChange={inputEmail} error={errors["email"] != null} helperText={errors["email"]} />
               </div>
               <div className={style.form_group}>
-                <InputTextField name="Password" value={password} onChange={inputPassword} type="password" />
-                <div className={style.form_error_field}>
-                  {errors["password"]}
-                </div>
+                <InputTextField className={style.textInput} name="Password" variant="outlined" 
+                                value={password} onChange={inputPassword} error={errors["email"] != null} helperText={errors["password"]}
+                                type="password" />
               </div>
               <div className={style.form_group}>
                 <InputCheckbox state={rememberMe} onChange={handleRememberMe} />
               </div>
               <div className={style.button_container}>
-                <ClassicButton className={style.login_button} type="submit" width="70%">Login</ClassicButton>
+                <ClassicButton className={style.login_button} type="submit">Login</ClassicButton>
               </div>
             </form>
           </div>
           <div className={style.login_alternatives}>
             Or login with
-              <div className={style.other_providers}>
+            <div className={style.other_providers}>
               {
                 providers !== null && Object.values(providers).map((provider: SessionProvider) => (
-                  acceptedProviders.includes(provider.id) &&
-                  <ClassicButton className={style.provider} onClick={() => signIn(provider.id)} width="47%" key={provider.name}>
-                    {provider.name}
-                  </ClassicButton>
+                  acceptedProviders.includes(provider.id) && mapProvidersButtons(provider.id)
                 ))
               }
             </div>
           </div>
           <div className={style.sign_up}>
             Not registered yet ?
-              {' '}
+            {' '}
             <Link href="/signUp">
               <span className="global_link">Sign up now !</span>
             </Link>

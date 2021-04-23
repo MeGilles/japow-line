@@ -1,7 +1,6 @@
 @import "/styles/theme.scss";
 
-.information_panel { 
-
+.information_panel {
   .title {
     font-size: $subtitle_text_size;
     text-indent: 2rem;
@@ -36,20 +35,73 @@
     }
 
     .graphical_information {
+      position: relative;
+
       display: flex;
       flex-direction: column;
       width: 50%;
 
       .map {
-        background-color: darkgrey;
+        background-color: $theme_main_color;
         height: 500px;
         margin: 5px;
+
+        .input_container {
+          position: absolute;
+
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+
+          width: 90%;
+
+          padding: 10px;
+
+          border-radius: 5px;
+
+          background-color: rgba($theme_main_color, 0.7);
+
+          .input {
+            width: 100%;
+          }
+        }
       }
 
       .elevation_chart {
-        background-color: darkgrey;
+        position: relative;
+
+        background-color: $theme_main_color;
         height: 200px;
         margin: 5px;
+
+        .input {
+          position: absolute;
+
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+
+          border-radius: 5px;
+          color: $theme_secondary_color;
+          background-color: rgba($theme_alternative_color, 0.7);
+
+          z-index: 1;
+
+          &:hover {
+            color: $theme_main_color;
+            background-color: $theme_secondary_color;
+          }
+        }
+
+        .error {
+          position: absolute;
+
+          top: 25%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+
+          color: $theme_text_error_color;
+        }
       }
     }
   }

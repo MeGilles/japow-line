@@ -7,8 +7,12 @@ export { default as ClassicButton } from "./buttons/classicButton";
 export { default as LikeButton } from "./buttons/likeButton";
 export { default as AnswerButton } from "./buttons/answerButton";
 export { default as ShareButton } from "./buttons/shareButton";
-export { default as LineButton } from "./buttons/lineButton";
 export { default as ReportButton } from "./buttons/reportButton";
+
+//Providers buttons
+export { default as GoogleButton } from "./buttons/googleButton";
+export { default as FacebookButton } from "./buttons/facebookButton";
+export { default as TwitterButton } from "./buttons/twitterButton";
 
 //Labels
 export { default as LikesLabel } from "./labels/likesLabel";
@@ -20,7 +24,10 @@ export { default as OutsideClickWrapper } from "./utils/outsideClickWrapper";
 
 //Inputs
 export { default as InputTextField } from "./inputs/inputTextField";
+export { default as InputSelectField } from "./inputs/inputSelectField";
 export { default as InputCheckbox } from "./inputs/inputCheckbox";
+export { default as FileInput } from "./inputs/fileInput";
+export { default as InputFileAndPreview } from "./inputs/inputFileAndPreview";
 export { default as CommentInput } from "./inputs/commentInput";
 
 //Carousel
@@ -37,7 +44,6 @@ export { default as RouteInformationPanel } from "./routesContent/informationPan
 export { default as RouteNavigationPanel } from "./routesContent/navigationPanel";
 export { default as RouteDescriptionPanel } from "./routesContent/descriptionPanel";
 export { default as RouteAreaPanel } from "./routesContent/areaPanel";
-export { default as RouteNewsPanel } from "./routesContent/newsPanel";
 export { default as RouteCommentsPanel } from "./routesContent/commentsPanel";
 
 //Comments
@@ -50,8 +56,12 @@ export { default as CommentNew } from "./comments/commentNew";
 export { default as CommentAnswer } from "./comments/commentAnswers/commentAnswer";
 export { default as CommentAnswerHeader } from "./comments/commentAnswers/commentAnswerHeader";
 
+//Route creation
+export { default as RouteDocument } from "./routeCreation/routeDocument";
+export { default as RouteForm } from "./routeCreation/routeForm";
 
 //----------------------------------
 
 //Types
 export * as CommentsTypes from "./comments/types";
+export * as InputsTypes from "./routeCreation/types";

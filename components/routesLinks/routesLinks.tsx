@@ -50,7 +50,7 @@ export default function RoutesLinks({ currentPath, routes, locations }) {
                     </div>
                         <div className={style.list}>
                             {
-                                routes !== null && routes.length > 0 ?
+                                routes != null && routes.length > 0 ?
                                     routes.map((route: { name: string, path: string[] }, index: number) => {
                                         return (
                                             <div className={style.link} key={route.name + index}>

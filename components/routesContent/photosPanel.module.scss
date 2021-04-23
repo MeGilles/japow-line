@@ -1,0 +1,50 @@
+@import "/styles/theme.scss";
+
+.photos_panel {
+  position: relative;
+
+    min-height: 60px;
+
+  .input,
+  .moved_input {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 5px;
+
+    color: $theme_main_color;
+    background-color: $theme_secondary_color;
+
+    z-index: 1;
+
+    &:hover {
+      color: $theme_secondary_color;
+      background-color: rgba($theme_alternative_color, 0.7);
+    }
+  }
+
+  .moved_input {
+    top: 10%;
+    left: 5%;
+  }
+
+  .error {
+    position: absolute;
+
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+
+    color: $theme_text_error_color;
+  }
+
+  .empty {
+    text-align: center;
+    font-size: $global_big_text_size;
+
+    padding: 20px;
+  }
+}

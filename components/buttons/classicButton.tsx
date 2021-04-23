@@ -5,13 +5,12 @@ type Props = {
     className: any,
     type?: "button" | "submit" | "reset",
     onClick?: any,
-    width?: string,
 }
 
-export default function ClassicButton({children, className, type, onClick, width} : Props) {
+export default function ClassicButton({children, className, type, onClick} : Props) {
 
     return (
-        <button className={[style.classic_button, className].join(" ")} type={type} onClick={onClick} style={{ width: width }}>
+        <button className={[style.classic_button, className].join(" ")} type={type} onClick={onClick}>
             {children}
         </button>
     );
@@ -22,5 +21,4 @@ ClassicButton.defaultProps = {
     className: "",
     type: 'button',
     onClick: () => {},
-    width: "100%",
 }

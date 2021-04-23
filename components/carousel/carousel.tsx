@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+
 import SettingsOverscanIcon from '@material-ui/icons/SettingsOverscan';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import style from './carousel.module.scss';
 import FullScreenSlider from './fullScreenSlider';
@@ -10,10 +12,10 @@ import ArrowRight from './arrowLeft';
 type Props = {
     images: { src: string }[],
     height: string,
+    feedBack?: any,
 }
 
-export default function Carousel({ images, height }: Props) {
-
+export default function Carousel({ images, height, feedBack }: Props) {
 
     const length = images.length;
     const [currentImage, setCurrentImage] = useState(0),
@@ -24,6 +26,12 @@ export default function Carousel({ images, height }: Props) {
     if (!Array.isArray(images) || images.length <= 0) {
         return null;
     }
+
+    useEffect(() => {
+        if (currentImage > images.length - 1) {
+            setCurrentImage(0);
+        }
+    }, [images])
 
     const nextImage = () => {
         const newImage = currentImage === length - 1 ? 0 : currentImage + 1;
@@ -126,6 +134,6 @@ export default function Carousel({ images, height }: Props) {
                     SyncGoToImageFunc={goToImage}
                 />
             }
-        </div>
+        </div >
     );
 }

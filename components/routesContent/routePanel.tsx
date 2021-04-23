@@ -5,16 +5,16 @@ import {
     RoutePhotosPanel,
     RouteDescriptionPanel,
     RouteAreaPanel,
-    RouteNewsPanel,
-    RouteCommentsPanel
+    RouteCommentsPanel,
+    InputsTypes,
 } from '../';
 
 type Props = {
     routeName: string,
-    mountainName: string,
-    recommendedMonth: string,
-    routeType: string,
-    altitudeZone: string,
+    mountainName: string[],
+    recommendedMonth: string[],
+    routeType: string[],
+    altitudeZone: string[],
     elevationDifference: number,
     maxAltitude: number,
     minAltitude: number,
@@ -23,8 +23,9 @@ type Props = {
     decentDistance: number,
     startPoint: string,
     goalPoint: string,
-    map: any,
-    elevationChart: any,
+    map: string,
+    photos: InputsTypes.attachmentType[],
+    elevationChart: InputsTypes.attachmentType,
     description: string
 }
 
@@ -43,6 +44,7 @@ export default function RoutePanel({
     startPoint,
     goalPoint,
     map,
+    photos,
     elevationChart,
     description
 }: Props) {
@@ -53,7 +55,7 @@ export default function RoutePanel({
                 {routeName}
             </div>
             <div className={style.content}>
-                <RoutePhotosPanel />
+                <RoutePhotosPanel photos={photos} />
                 <RouteInformationPanel
                     mountainName={mountainName}
                     recommendedMonth={recommendedMonth}
@@ -74,8 +76,6 @@ export default function RoutePanel({
                     <RouteDescriptionPanel description={description} />
                     <RouteAreaPanel />
                 </div>
-                <RouteNewsPanel />
-                <RouteCommentsPanel />
             </div >
             <br/>
             <br/>
@@ -86,4 +86,3 @@ export default function RoutePanel({
         </section>
     );
 }
-

@@ -1,0 +1,19 @@
+@import "/styles/theme.scss";
+
+.add_photo {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: darkgrey;
+    cursor: pointer;
+
+    &:hover {
+      color: $theme_secondary_color;
+    }
+
+    .input {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+  }

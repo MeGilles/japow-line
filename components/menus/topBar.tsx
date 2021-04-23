@@ -7,8 +7,8 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import style from "./topBar.module.scss";
 import { MenuContent } from "../../lib/menu";
-import Menu from "./menu";
-import MenuButton from "./menuButton";
+import DropList from "./dropList";
+import DropListButton from "./dropListButton";
 import LoginButton from "./loginButton";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,7 +60,7 @@ export default function TopBar(props: Props) {
 
       {props.menuItems.map((menuSection: MenuContent, index: number) => {
         return menuSection.subsections ? (
-          <Menu
+          <DropList
             name={menuSection.name}
             redirection={menuSection.redirection}
             subsections={menuSection.subsections}
@@ -70,7 +70,7 @@ export default function TopBar(props: Props) {
           />
         ) : (
           <div className={style.button_container} key={index}>
-            <MenuButton name={menuSection.name} click={() => router.push(menuSection.redirection)} />
+            <DropListButton name={menuSection.name} click={() => router.push(menuSection.redirection)} />
           </div>
         );
       })}

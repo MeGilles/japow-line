@@ -15,12 +15,12 @@ body {
 
   ::selection {
     color: $theme_text_secondary_color;
-    background: $theme_secondary_color;
+    background: $theme_alternative_color;
   }
 
   ::-moz-selection {
     color: $theme_text_secondary_color;
-    background: $theme_secondary_color;
+    background: $theme_alternative_color;
   }
 }
 

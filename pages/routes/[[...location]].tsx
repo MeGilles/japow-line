@@ -57,11 +57,12 @@ function RoutePage({
             <TopBanner />
             <div className={style.route_container}>
                 <RouteNavigationPanel path={currentPath} />
-                <RoutePanel routeName={name}
-                    mountainName={mountainName}
-                    recommendedMonth={recomendedMonth && recomendedMonth.map((month) => numberToMonth(month)).join(', ')}
-                    routeType={routeType && routeType.name}
-                    altitudeZone={altitudeZone && altitudeZone.name}
+                <RoutePanel 
+                    routeName={name}
+                    mountainName={[mountainName]}
+                    recommendedMonth={[recomendedMonth]}
+                    routeType={routeType && [routeType.name]}
+                    altitudeZone={altitudeZone && [altitudeZone.name]}
                     elevationDifference={elevationDifference}
                     maxAltitude={maxAltitude}
                     minAltitude={minAltitude}
@@ -70,7 +71,8 @@ function RoutePage({
                     decentDistance={decentDistance}
                     startPoint={startPointType && startPointType.name}
                     goalPoint={endPointType && endPointType.name}
-                    map={mapId}
+                    map={null}
+                    photos={fakeImages}
                     elevationChart={barChartId}
                     description={description}
                 />
@@ -256,3 +258,21 @@ function numberToMonth(month: number) {
             return "Unknown";
     }
 }
+
+const fakeImages = [
+    {
+        src: '/images/one_man_walking.jpg'
+    },
+    {
+        src: '/images/one_man_walking_large_landscape.jpg'
+    },
+    {
+        src: '/images/one_man_standing.jpg'
+    },
+    {
+        src: '/images/login_bg.jpg'
+    },
+    {
+        src: '/images/Nao.jpg'
+    },
+]

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router'
 
-import styles from "./menu.module.scss";
-import MenuButton from "./menuButton";
+import styles from "./dropList.module.scss";
+import DropListButton from "./dropListButton";
 
 type Props = {
   name: string;
@@ -15,7 +15,7 @@ type Props = {
   shouldOpen: boolean;
 }
 
-export default function Menu(props: Props) {
+export default function DropList(props: Props) {
 
   const [open, setOpen] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Menu(props: Props) {
       onMouseEnter={toggleMenu}
       onMouseLeave={toggleMenu}
     >
-      <MenuButton name={props.name} isHovered={open} isExpandMenuButton={true} isExpandMenuOpened={open} click={() => router.push(props.redirection)} />
+      <DropListButton name={props.name} isHovered={open} isExpandMenuButton={true} isExpandMenuOpened={open} click={() => router.push(props.redirection)} />
       <div
         className={styles.menu_content_container}
         style={{ opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none' }}
@@ -48,7 +48,7 @@ export default function Menu(props: Props) {
               style={{maxHeight: open ? '1000px' : '0px'}}
               key={subsection.name+index}
             >
-              <MenuButton name={props.subsections[index].name} click={() => router.push(props.subsections[index].redirection)} orientation={'horizontal'} textAlign={'left'} />
+              <DropListButton name={props.subsections[index].name} click={() => router.push(props.subsections[index].redirection)} orientation={'horizontal'} textAlign={'left'} />
             </div>
           ))
         }
@@ -57,7 +57,7 @@ export default function Menu(props: Props) {
   );
 }
 
-Menu.defaultProps = {
+DropList.defaultProps = {
   name: "unnamed",
   redirection: "/",
   subsections: [],

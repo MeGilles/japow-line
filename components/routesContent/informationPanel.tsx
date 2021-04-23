@@ -1,10 +1,14 @@
+import { useState, useCallback } from 'react';
+import Image from 'next/image';
+
 import style from './informationPanel.module.scss';
+import { InputTextField, FileInput, CommentsTypes } from '../';
 
 type Props = {
-    mountainName: string,
-    recommendedMonth: string,
-    routeType: string,
-    altitudeZone: string,
+    mountainName: string[],
+    recommendedMonth: string[],
+    routeType: string[],
+    altitudeZone: string[],
     elevationDifference: number,
     maxAltitude: number,
     minAltitude: number,
@@ -33,23 +37,22 @@ export default function InformationPanel({
     map,
     elevationChart }: Props) {
 
-
     const items = [
         {
             text: "Mountains:",
-            content: mountainName
+            content: mountainName && mountainName.join(", ")
         },
         {
             text: "Recommended month:",
-            content: recommendedMonth
+            content: recommendedMonth && recommendedMonth.join(", ")
         },
         {
             text: "Route type:",
-            content: routeType
+            content: routeType && routeType.join(", ")
         },
         {
             text: "Altitude zone:",
-            content: altitudeZone
+            content: altitudeZone && altitudeZone.join(", ")
         },
         {
             text: "Difference in elevation:",
@@ -103,10 +106,12 @@ export default function InformationPanel({
                             return (
                                 <div className={style.info_item} key={index}>
                                     {text}
-                                    <div className={style.value}>
-                                        {content}
-                                    </div>
-                                    {suffix}
+                                    {
+                                        <div className={style.value} contentEditable={false}>
+                                            {content}
+                                        </div>
+                                    }
+                                    {suffix && ' ' + suffix}
                                 </div>
                             )
                         })
@@ -114,10 +119,21 @@ export default function InformationPanel({
                 </div>
                 <div className={style.graphical_information}>
                     <div className={style.map}>
-                        <iframe src="https://www.google.com/maps/d/embed?mid=1o6YnKQp6fH9ST_4J2fNH3SkOD9C8fQnt&hl=ja" width="100%" height="100%" />
+                        {
+                            map && map != "" ?
+
+                                <iframe src={map} width="100%" height="100%" />
+                                :
+                                'No map'
+                        }
                     </div>
                     <div className={style.elevation_chart}>
-                        {elevationChart}
+                        {
+                            elevationChart && elevationChart.src ?
+                                <Image src={elevationChart.src} layout="fill" />
+                                :
+                                'No elevation chart'
+                        }
                     </div>
                 </div>
             </div>
